@@ -2,12 +2,25 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
+// var compass = require('node-compass');
+var path = require('path');
 
 // Create our Express application
 var app = express();
 
 // Use environment defined port or 3000
 var port = process.env.PORT || 3000;
+
+app.use(express.static('public'))
+// app.configure(function() {
+// app.use(compass({
+//   project : __dirname,
+//   sass : 'source_sass',
+//   css : 'public/css',
+//   cache: false,
+//   config_file : path.join(__dirname, '/compass_config.rb')
+// }));
+// });
 
 //Allow CORS so that backend and frontend could pe put on different servers
 var allowCrossDomain = function(req, res, next) {
