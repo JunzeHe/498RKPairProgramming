@@ -1,11 +1,26 @@
 var mp4Controllers = angular.module('mp4Controllers', []);
 
-mp4Controllers.controller('FirstController', ['$scope', 'CommonData'  , function($scope, CommonData) {
+mp4Controllers.controller('SocketsExampleController', ['$scope',function($scope, CommonData) {
+  var socket = io();
   $scope.data = "";
-   $scope.displayText = ""
+  $scope.displayText = ""
 
   $scope.setData = function(){
-    CommonData.setData($scope.data);
+    // CommonData.setData($scope.data);
+
+    $scope.displayText = "Data set"
+  };
+
+}]);
+
+
+mp4Controllers.controller('FirstController', ['$scope', 'CommonData'  , function($scope, CommonData) {
+  $scope.data = "";
+  $scope.displayText = ""
+
+  $scope.setData = function(){
+    // CommonData.setData($scope.data);
+
     $scope.displayText = "Data set"
 
   };
