@@ -4,6 +4,7 @@ mp4Controllers.controller('SocketsExampleController', ['$scope',function($scope,
   var socket = io();
   $scope.data = "";
   $scope.displayText = ""
+  $scope.serverResponses = []
 
   $scope.setData = function(){
     // CommonData.setData($scope.data);
@@ -11,10 +12,25 @@ mp4Controllers.controller('SocketsExampleController', ['$scope',function($scope,
     $scope.displayText = "Data sent"
   };
 
+  $scope.keyPressed = function(){
+    socket.emit('new edit', $scope.dummyCode);
+  };
+
+  $scope.sendMsg = function(){
+    socket.emit('chat message', $scope.chatMsg);
+  };
+
   socket.on('kickass mindwashing emission', function(msg){
     //Super important that you do $scope.$apply when you receive emissions for speedups
     $scope.$apply(function(){$scope.displayText = msg;});
     console.log(msg);
+  });
+
+  socket.on('response', function(res){
+    console.log(res);
+    $scope.$apply(function(){
+      $scope.serverResponses.unshift(res);
+    });
   });
 
 }]);
