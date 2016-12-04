@@ -4,6 +4,8 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 // var compass = require('node-compass');
 var path = require('path');
+var mongoose = require('mongoose');
+var secrets = require('./config/secrets');
 
 // Create our Express application
 var app = express();
@@ -45,6 +47,8 @@ app.use(bodyParser.json());
 // Use routes as a module (see index.js)
 require('./routes')(app, router);
 require('./routes/sockets.js')(io);
+
+mongoose.connect(secrets.mongo_connection);
 
 // Start the server
 http.listen(port);

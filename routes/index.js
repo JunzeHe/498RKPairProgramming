@@ -5,6 +5,7 @@ module.exports = function (app, router) {
   app.use('/api', require('./home.js')(router));
   // app.use('/api', require('./llama.js')(router));
   app.use('/', require('./views.js')(router));
+  app.use('/api/room', require('./room.js')(router));
 
   require('./sockets.js')(app);
 };
