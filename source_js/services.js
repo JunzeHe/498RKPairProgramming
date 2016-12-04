@@ -1,13 +1,13 @@
 var PPServices = angular.module('PPServices', []);
 
 PPServices.factory('CommonData', function() {
-  var data = "";
+  var username = "";
   return {
-    getData: function() {
-      return data;
+    getUsername: function() {
+      return username;
     },
-    setData: function(newData) {
-      data = newData;
+    setUsername: function(newUsername) {
+      username = newUsername;
     }
   }
 });
