@@ -8,6 +8,10 @@ var path = require('path');
 // Create our Express application
 var app = express();
 
+// Listen for socket clients
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 // Use environment defined port or 3000
 var port = process.env.PORT || 3000;
 
@@ -40,7 +44,9 @@ app.use(bodyParser.json());
 
 // Use routes as a module (see index.js)
 require('./routes')(app, router);
+require('./routes/sockets.js')(io);
 
 // Start the server
-app.listen(port);
+http.listen(port);
+// app.listen(port);
 console.log('Server running on port ' + port);

@@ -6,6 +6,10 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/firstview.html',
     controller: 'FirstController'
   }).
+  when('/socketsexample', {
+    templateUrl: 'partials/socketsexample.html',
+    controller: 'SocketsExampleController'
+  }).
   when('/secondview', {
     templateUrl: 'partials/secondview.html',
     controller: 'SecondController'
