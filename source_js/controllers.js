@@ -7,19 +7,23 @@ PPControllers.controller('LandingController', ['$scope', 'Backend', 'CommonData'
     $scope.submitted = true;
     $scope.error = "";
     $scope.hasError = false;
+    console.log(isValid);
     if (isValid) {
       CommonData.setUsername($scope.username);
-      // Backend.createRoom($scope.roomname).then(function(res) {
-      //   $location.path('/room')
-      // }, function(res) {
-      //   $scope.hasError = true;
-      //   $scope.error = res;
-      // });
-      $location.path('/room')
+      // $location.path('/room');
+      Backend.createRoom($scope.roomname).then(function(res) {
+        console.log("success");
+        $scope.$apply($location.url('/room/' + res));
+      }, function(res) {
+        console.log("failure");
+        $scope.hasError = true;
+        $scope.error = res;
+      });
+
     }
   }
 }]);
 
-PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', function($scope, Backend, CommonData) {
-
+PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '$routeParams', function($scope, Backend, CommonData, $routeParams) {
+  $scope.roomId = $routeParams.roomId;
 }]);
