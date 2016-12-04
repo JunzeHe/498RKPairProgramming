@@ -7,9 +7,15 @@ mp4Controllers.controller('SocketsExampleController', ['$scope',function($scope,
 
   $scope.setData = function(){
     // CommonData.setData($scope.data);
-
-    $scope.displayText = "Data set"
+    socket.emit('literally any event name', $scope.data);
+    $scope.displayText = "Data sent"
   };
+
+  socket.on('kickass mindwashing emission', function(msg){
+    //Super important that you do $scope.$apply when you receive emissions for speedups
+    $scope.$apply(function(){$scope.displayText = msg;});
+    console.log(msg);
+  });
 
 }]);
 
