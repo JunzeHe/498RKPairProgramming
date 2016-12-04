@@ -6,6 +6,10 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'partials/landing.html',
       controller: 'LandingController'
     })
+    .when('/room', {
+      templateUrl: 'partials/room.html',
+      controller: 'RoomController'
+    })
     .otherwise({
       redirectTo: '/landing'
     });
