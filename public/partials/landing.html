@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="columns small-6 small-offset-3">
+    <h1 class="text-center">Start A Room</h1>
+    <form novalidate name="userForm" ng-submit="createUser(userForm.$valid)">
+      <label>
+        <input type="text" name="name" placeholder="Username" required ng-model="username" ng-class="{'invalid-input':userForm.username.$invalid && submitted}">
+        <p ng-show="userForm.name.$invalid && submitted" class="help-text-invalid help-text">Username is required.</p>
+      </label>
+      <label>
+        <input type="text" name="name" placeholder="Room Name" required ng-model="roomname" ng-class="{'invalid-input':userForm.roomname.$invalid && submitted}">
+        <p ng-show="userForm.roomname.$invalid && submitted" class="help-text-invalid help-text">Roomname is required.</p>
+      </label>
+      <button class="hollow button" type="submit">Start</button>
+      <p ng-show="hasError" class="alert callout">Error: {{error}}</p>
+    </form>
+  </div>
+</div>
