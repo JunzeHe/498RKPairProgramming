@@ -1,17 +1,32 @@
 <div class="list">
   Web Sockets Example
-	<form>
-	  <div class="row">
-          <div class="small-12 columns">
-            <input ng-model="data" type="text" placeholder="message">
-          </div>
+  <form>
+    <div class="text-center" id="dummyCodeEditor">
+      <p>Dummy Code Editor- sends response with every keypress</p>
+      <input ng-model="dummyCode" ng-change="keyPressed($event)" type="text" placeholder="console.log('butts')">
+    </div>
+
+    <div class="text-center" id="chat">
+      <p>Dummy Chat - sends response with every submission</p>
+      <input ng-model="chatMsg" type="text">
+      <button ng-click="sendMsg()" class="button">Send Message Via Web Sockets</button>
+    </div>
+
+    <div class="row">
+      <div class="small-12 columns">
+        <input ng-model="data" type="text" placeholder="Whatever you want">
       </div>
+    </div>
 
     <div class="text-center">
       <button ng-click="setData()" class="button tiny info">Send Data Via Websockets</button>
     </div>
 
-    {{displayText}}
+    <ul>
+      <li ng-repeat="data in serverResponses">
+        {{data}}
+      </li>
+    </ul>
 
   </form>
 </div>
