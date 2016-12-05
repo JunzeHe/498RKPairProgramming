@@ -14,12 +14,13 @@ mp4Controllers.controller('SocketsExampleController', ['$scope',function($scope,
     $scope.displayText = "Data sent"
   };
 
-  var roomId = Math.random()*1000
-  var userId = Math.random()*1000
+  var roomId = Math.floor(Math.random()*1000)
+  var userId = Math.floor(Math.random()*1000)
 
   $scope.keyPressed = function(){
     socket.emit('new edit',
       {
+        dateCreated: new Date(),
         userId: userId,
         userName: "Dummy",
         roomName: "Dummy Room",
@@ -31,6 +32,7 @@ mp4Controllers.controller('SocketsExampleController', ['$scope',function($scope,
   $scope.sendMsg = function(){
     socket.emit('chat message',
       {
+        dateCreated: new Date(),
         userId: userId,
         userName: "Dummy",
         roomName: "Dummy Room",

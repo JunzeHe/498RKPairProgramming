@@ -1,7 +1,7 @@
 var Room = require('../models/room');
 
 module.exports = function(router) {
-  var createRoomRoute = router.route('/');
+  var createRoomRoute = router.route('/api/room');
 
   createRoomRoute.post(function(req,res){
     if('roomName' in req.body && req.body['roomName'].length > 0){
