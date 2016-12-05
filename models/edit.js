@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 
 // Define our beer schema
 var EditSchema   = new mongoose.Schema({
+  dateCreated: Date,
   userId: Number,
   userName: String,
   roomName: String,

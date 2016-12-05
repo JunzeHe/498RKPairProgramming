@@ -2,7 +2,7 @@ var secrets = require('../config/secrets');
 
 module.exports = function(router) {
 
-  var homeRoute = router.route('/secrets');
+  var homeRoute = router.route('/api/secrets');
 
   homeRoute.get(function(req, res) {
     connectionString = secrets.token;
