@@ -2,11 +2,11 @@ var app = angular.module('app', ['ngRoute', 'PPControllers', 'PPServices']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
-    .when('/landing', {
+    .when('/landing/:roomId?', {
       templateUrl: 'partials/landing.html',
       controller: 'LandingController'
     })
-    .when('/room/:roomId', {
+    .when('/room', {
       templateUrl: 'partials/room.html',
       controller: 'RoomController'
     })

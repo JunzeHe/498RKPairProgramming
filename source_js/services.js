@@ -1,35 +1,33 @@
-var PPServices = angular.module('PPServices', []);
+var PPServices = angular.module('PPServices', ['ngStorage']);
 
-PPServices.factory('CommonData', function() {
-  var username = "";
+PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
+  var username = $sessionStorage.username;
+  var room = $sessionStorage.room;
   return {
     getUsername: function() {
       return username;
     },
     setUsername: function(newUsername) {
-      username = newUsername;
+      username = $sessionStorage.username = newUsername;
+    },
+    getRoom: function() {
+      return room;
+    },
+    setRoom: function(newRoom) {
+      room = $sessionStorage.room = newRoom;
     }
   }
-});
+}]);
 
-PPServices.factory('Backend', function($http, $window) {
-  var baseUrl = "";
-  var get = function() {
-    return $http.get(baseUrl);
-  }
+PPServices.factory('Backend', ['$http', function($http) {
+  var baseUrl = "/api";
+
   return {
-    createRoom: function(roomname) {
-      var promise = new Promise(function(resolve, reject) {
-        setTimeout(function() {
-          if (true) {
-            resolve("dummyId" + roomname);
-          } else {
-            reject(Error("It broke"));
-          }
-        }, 1000);
-      });
-
-      return promise;
+    createRoom: function(roomName) {
+      return $http.post(baseUrl + "/room", {roomName: roomName});
+    },
+    getRoom: function(roomId) {
+      return $http.get(baseUrl + "/room", {roomId: roomId});
     }
   }
-});
+}]);
