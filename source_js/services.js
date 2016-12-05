@@ -1,25 +1,25 @@
-var PPServices = angular.module('PPServices', []);
+var PPServices = angular.module('PPServices', ['ngStorage']);
 
-PPServices.factory('CommonData', function() {
-  var username = "";
-  var room = {};
+PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
+  var username = $sessionStorage.username;
+  var room = $sessionStorage.room;
   return {
     getUsername: function() {
       return username;
     },
     setUsername: function(newUsername) {
-      username = newUsername;
+      username = $sessionStorage.username = newUsername;
     },
     getRoom: function() {
       return room;
     },
     setRoom: function(newRoom) {
-      room = newRoom;
+      room = $sessionStorage.room = newRoom;
     }
   }
-});
+}]);
 
-PPServices.factory('Backend', function($http, $window) {
+PPServices.factory('Backend', ['$http', function($http) {
   var baseUrl = "/api";
 
   return {
@@ -27,4 +27,4 @@ PPServices.factory('Backend', function($http, $window) {
       return $http.post(baseUrl + "/room", {roomName: roomName});
     }
   }
-});
+}]);
