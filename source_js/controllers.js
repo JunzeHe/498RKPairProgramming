@@ -2,7 +2,7 @@ var PPControllers = angular.module('PPControllers', []);
 
 PPControllers.controller('LandingController', ['$scope', 'Backend', 'CommonData', '$location', function($scope, Backend, CommonData, $location) {
   $scope.username = "";
-  $scope.roomname = "";
+  $scope.roomName = "";
   $scope.createRoom = function(isValid) {
     $scope.submitted = true;
     $scope.error = "";
@@ -11,9 +11,11 @@ PPControllers.controller('LandingController', ['$scope', 'Backend', 'CommonData'
     if (isValid) {
       CommonData.setUsername($scope.username);
       // $location.path('/room');
-      Backend.createRoom($scope.roomname).then(function(res) {
-        console.log("success");
-        $scope.$apply($location.url('/room/' + res));
+      Backend.createRoom($scope.roomName).then(function(res) {
+        console.log(res);
+        CommonData.setRoom(res.data.data);
+        $location.url('/room');
+        // $scope.$apply($location.url('/room/' + res.data.data._id));
       }, function(res) {
         console.log("failure");
         $scope.hasError = true;
@@ -24,6 +26,7 @@ PPControllers.controller('LandingController', ['$scope', 'Backend', 'CommonData'
   }
 }]);
 
-PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '$routeParams', function($scope, Backend, CommonData, $routeParams) {
-  $scope.roomId = $routeParams.roomId;
+PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', function($scope, Backend, CommonData) {
+  $scope.room = CommonData.getRoom();
+  $scope.username = CommonData.getUsername();
 }]);
