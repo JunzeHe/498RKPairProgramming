@@ -23,8 +23,8 @@ PPServices.factory('Backend', function($http, $window) {
   var baseUrl = "/api";
 
   return {
-    createRoom: function(roomname) {
-      return $http.post(baseUrl + "/room", {roomName: roomname});
+    createRoom: function(roomName) {
+      return $http.post(baseUrl + "/room", {roomName: roomName});
     }
   }
 });
