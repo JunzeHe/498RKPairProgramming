@@ -25,6 +25,9 @@ PPServices.factory('Backend', ['$http', function($http) {
   return {
     createRoom: function(roomName) {
       return $http.post(baseUrl + "/room", {roomName: roomName});
+    },
+    getRoom: function(roomId) {
+      return $http.get(baseUrl + "/room", {roomId: roomId});
     }
   }
 }]);
