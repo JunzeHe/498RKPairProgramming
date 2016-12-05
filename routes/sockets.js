@@ -1,4 +1,5 @@
-
+var Message = require('../models/message');
+var Edit = require('../models/edit');
 module.exports = function(io){
   io.on('connection', function(socket){
     console.log("socket connected");
@@ -14,14 +15,24 @@ module.exports = function(io){
 
     socket.on('chat message', function(msg){
       console.log("Chat message received");
-      io.emit('response', 'Message received: ' + msg);
-    });
 
-    var numEdit = 0;
-    socket.on('new edit', function(event){
-      numEdit += 1;
-      console.log("new edit received");
-      io.emit('response', 'Edit ' + numEdit.toString() + ' stored.');
+      var message = new Message(msg);
+      message.save(function(err, createdMsg){
+        if(err)
+          io.emit("response", {message: "There was an error", data: err});
+        else
+          io.emit('response', {message: "Message stored", data: createdMsg});
+      });
+    })
+
+    socket.on('new edit', function(data){
+      var edit = new Edit(data);
+      edit.save(function(err, createdEdit){
+        if(err)
+          io.emit('response', {message:"There was an error", data: err});
+        else
+          io.emit('response', {message:"Edit stored", data: createdEdit});
+      });
     });
   });
 

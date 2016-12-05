@@ -6,28 +6,45 @@ mp4Controllers.controller('SocketsExampleController', ['$scope',function($scope,
   $scope.displayText = ""
   $scope.serverResponses = []
 
+  console.log("hi");
+
   $scope.setData = function(){
     // CommonData.setData($scope.data);
     socket.emit('literally any event name', $scope.data);
     $scope.displayText = "Data sent"
   };
 
+  var roomId = Math.random()*1000
+  var userId = Math.random()*1000
+
   $scope.keyPressed = function(){
-    socket.emit('new edit', $scope.dummyCode);
+    socket.emit('new edit',
+      {
+        userId: userId,
+        userName: "Dummy",
+        roomName: "Dummy Room",
+        roomId: roomId,
+        edit: $scope.dummyCode
+      });
   };
 
   $scope.sendMsg = function(){
-    socket.emit('chat message', $scope.chatMsg);
-  };
+    socket.emit('chat message',
+      {
+        userId: userId,
+        userName: "Dummy",
+        roomName: "Dummy Room",
+        roomId: roomId,
+        message: $scope.chatMsg
+      });
+    }
 
   socket.on('kickass mindwashing emission', function(msg){
     //Super important that you do $scope.$apply when you receive emissions for speedups
     $scope.$apply(function(){$scope.displayText = msg;});
-    console.log(msg);
   });
 
   socket.on('response', function(res){
-    console.log(res);
     $scope.$apply(function(){
       $scope.serverResponses.unshift(res);
     });
