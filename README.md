@@ -62,11 +62,11 @@ Sample code in `source_js/controllers.js`
   - Ordered by date created
   - Does not support Mongoose style filtering yet
 - **GET /api/edits/:roomId?**
-  - Returns all edits for room with roomId
-  - Returns edits for every room if roomId is empty
+  - Returns latest edit/version for room with roomId
   - URL Params
     - history -> if true, returns only a list of dates corresponding to the edits
     - lastCreated = dateString -> returns list of Edits before lastCreated
+  - To get all of the edits in a room, set lastCreated to be in the future 
 - **GET /api/messages/:roomId?**
   - Returns all message for a room with roomId
   - Returns messages for every room if roomId is empty
