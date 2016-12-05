@@ -1,22 +1,35 @@
-var mp4Services = angular.module('mp4Services', []);
+var PPServices = angular.module('PPServices', []);
 
-mp4Services.factory('CommonData', function(){
-    var data = "";
-    return{
-        getData : function(){
-            return data;
-        },
-        setData : function(newData){
-            data = newData;
-        }
+PPServices.factory('CommonData', function() {
+  var username = "";
+  return {
+    getUsername: function() {
+      return username;
+    },
+    setUsername: function(newUsername) {
+      username = newUsername;
     }
+  }
 });
 
-mp4Services.factory('Llamas', function($http, $window) {
-    return {
-        get : function() {
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl+'/api/llamas');
-        }
+PPServices.factory('Backend', function($http, $window) {
+  var baseUrl = "";
+  var get = function() {
+    return $http.get(baseUrl);
+  }
+  return {
+    createRoom: function(roomname) {
+      var promise = new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          if (true) {
+            resolve("dummyId" + roomname);
+          } else {
+            reject(Error("It broke"));
+          }
+        }, 1000);
+      });
+
+      return promise;
     }
+  }
 });

@@ -1,100 +1,29 @@
-var mp4Controllers = angular.module('mp4Controllers', []);
+var PPControllers = angular.module('PPControllers', []);
 
-mp4Controllers.controller('SocketsExampleController', ['$scope',function($scope, CommonData) {
-  var socket = io();
-  $scope.data = "";
-  $scope.displayText = ""
-  $scope.serverResponses = []
-
-  console.log("hi");
-
-  $scope.setData = function(){
-    // CommonData.setData($scope.data);
-    socket.emit('literally any event name', $scope.data);
-    $scope.displayText = "Data sent"
-  };
-
-  var roomId = Math.floor(Math.random()*1000)
-  var userId = Math.floor(Math.random()*1000)
-
-  $scope.keyPressed = function(){
-    socket.emit('new edit',
-      {
-        dateCreated: new Date(),
-        userId: userId,
-        userName: "Dummy",
-        roomName: "Dummy Room",
-        roomId: roomId,
-        edit: $scope.dummyCode
+PPControllers.controller('LandingController', ['$scope', 'Backend', 'CommonData', '$location', function($scope, Backend, CommonData, $location) {
+  $scope.username = "";
+  $scope.roomname = "";
+  $scope.createRoom = function(isValid) {
+    $scope.submitted = true;
+    $scope.error = "";
+    $scope.hasError = false;
+    console.log(isValid);
+    if (isValid) {
+      CommonData.setUsername($scope.username);
+      // $location.path('/room');
+      Backend.createRoom($scope.roomname).then(function(res) {
+        console.log("success");
+        $scope.$apply($location.url('/room/' + res));
+      }, function(res) {
+        console.log("failure");
+        $scope.hasError = true;
+        $scope.error = res;
       });
-  };
 
-  $scope.sendMsg = function(){
-    socket.emit('chat message',
-      {
-        dateCreated: new Date(),
-        userId: userId,
-        userName: "Dummy",
-        roomName: "Dummy Room",
-        roomId: roomId,
-        message: $scope.chatMsg
-      });
     }
-
-  socket.on('kickass mindwashing emission', function(msg){
-    //Super important that you do $scope.$apply when you receive emissions for speedups
-    $scope.$apply(function(){$scope.displayText = msg;});
-  });
-
-  socket.on('response', function(res){
-    $scope.$apply(function(){
-      $scope.serverResponses.unshift(res);
-    });
-  });
-
+  }
 }]);
 
-
-mp4Controllers.controller('FirstController', ['$scope', 'CommonData'  , function($scope, CommonData) {
-  $scope.data = "";
-  $scope.displayText = ""
-
-  $scope.setData = function(){
-    // CommonData.setData($scope.data);
-
-    $scope.displayText = "Data set"
-
-  };
-
-}]);
-
-mp4Controllers.controller('SecondController', ['$scope', 'CommonData' , function($scope, CommonData) {
-  $scope.data = "";
-
-  $scope.getData = function(){
-    $scope.data = CommonData.getData();
-
-  };
-
-}]);
-
-
-mp4Controllers.controller('LlamaListController', ['$scope', '$http', 'Llamas', '$window' , function($scope, $http,  Llamas, $window) {
-
-  Llamas.get().success(function(data){
-    $scope.llamas = data;
-  });
-
-
-}]);
-
-mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
-  $scope.url = $window.sessionStorage.baseurl;
-
-  $scope.setUrl = function(){
-    $window.sessionStorage.baseurl = $scope.url;
-    $scope.displayText = "URL set";
-
-  };
-
+PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '$routeParams', function($scope, Backend, CommonData, $routeParams) {
+  $scope.roomId = $routeParams.roomId;
 }]);
