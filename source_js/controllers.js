@@ -72,6 +72,19 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
       $scope.serverResponses.push(res.data);
     });
   });
+
+  socket.on('new user', function(newUserName){
+    room = CommonData.getRoom();
+    room.users.push(newUserName);
+    CommonData.setRoom(room);
+  });
+
+  socket.on('user has left room', function(oldUserName){
+    room = CommonData.getRoom();
+    room.users.splice(room.users.indexOf(oldUserName), 1);
+    CommonData.setRoom(room);
+  });
+
   $scope.sendMsg = function(isValid) {
     if (!isValid) {
       return;

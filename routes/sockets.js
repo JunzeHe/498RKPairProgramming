@@ -37,15 +37,17 @@ module.exports = function(io){
       });
     });
 
-
     var userName = "";
     var roomId = "";
     socket.on('store username and roomId', function(data){
       userName = data.username;
       roomId = data.roomId
+
+      io.emit('new user', userName);
     });
 
     socket.on('disconnect', function(){
+      io.emit('user has left room', userName);
       Room.findByIdAndUpdate(roomId,
         {$pull: {"users":userName}},
         {new: true},
