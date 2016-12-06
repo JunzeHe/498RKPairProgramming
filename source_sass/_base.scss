@@ -19,13 +19,19 @@ h3 {
   background-color: #147cc0;
   height: 100vh;
   padding: 0;
-
+  display: flex;
+  flex-direction: column;
+  .code-box {
+    width: 100%;
+    flex: 100;
+  }
   .code-toolbar {
+    flex: 1;
     background-color: #cacaca;
     margin-bottom: 0;
     bottom: 0;
-    position: fixed;
-    width: inherit;
+    // position: fixed;
+    width: 100%;
     padding: 0.9375rem;
 
     .icons {
