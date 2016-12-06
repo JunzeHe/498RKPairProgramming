@@ -1,16 +1,27 @@
 <div class="row">
-  <div class="columns small-6 small-offset-3">
-    <h1 class="text-center">Create Room</h1>
+  <div ng-if="!roomId" class="columns small-6 small-offset-3">
+    <h1 class="text-center">Start A Room</h1>
     <form novalidate name="roomForm" ng-submit="createRoom(roomForm.$valid)">
       <label>
         <input type="text" name="username" placeholder="Username" required ng-model="username" ng-class="{'invalid-input':roomForm.username.$invalid && submitted}">
-        <p ng-show="roomForm.name.$invalid && submitted" class="help-text-invalid help-text">Username is required.</p>
+        <p ng-show="roomForm.username.$invalid && submitted" class="help-text-invalid help-text">Username is required.</p>
       </label>
       <label>
-        <input type="text" name="name" placeholder="Room Name" required ng-model="roomname" ng-class="{'invalid-input':roomForm.roomname.$invalid && submitted}">
-        <p ng-show="roomForm.roomname.$invalid && submitted" class="help-text-invalid help-text">Roomname is required.</p>
+        <input type="text" name="name" placeholder="Room Name" required ng-model="roomName" ng-class="{'invalid-input':roomForm.roomName.$invalid && submitted}">
+        <p ng-show="roomForm.roomName.$invalid && submitted" class="help-text-invalid help-text">Roomname is required.</p>
       </label>
       <button class="hollow button" type="submit">Start</button>
+      <p ng-show="hasError" class="alert callout">Error: {{error}}</p>
+    </form>
+  </div>
+  <div ng-if="roomId" class="columns small-6 small-offset-3">
+    <h1 class="text-center">Join A Room</h1>
+    <form novalidate name="roomForm" ng-submit="joinRoom(roomForm.$valid)">
+      <label>
+        <input type="text" name="username" placeholder="Username" required ng-model="username" ng-class="{'invalid-input':roomForm.username.$invalid && submitted}">
+        <p ng-show="roomForm.username.$invalid && submitted" class="help-text-invalid help-text">Username is required.</p>
+      </label>
+      <button class="hollow button" type="submit">Join</button>
       <p ng-show="hasError" class="alert callout">Error: {{error}}</p>
     </form>
   </div>
