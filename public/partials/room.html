@@ -1,14 +1,18 @@
 <div>
     <h1>Spooky Empty Room</h1>
-    <p>Username: {{username}}</p>
-    <p>Room Name: {{room.roomName}}</p>
-    <p>Room id: {{room._id}}</p>
+    <dl>
+    <span>Username: {{username}} | </span>
+    <span>Room Name: {{room.roomName}} | </span>
+    <span>Room id: {{room._id}} </span>
+    </dl>
     <div id="message_container">
         <div id="message_topbar"></div>
-        <div id="message_panel"></div>
+        <div id="message_panel" class="callout">
+            <p ng-repeat="message in serverResponses">{{message.userName}} : {{message.message}}</p>
+        </div>
         <div id="message_input">
-            <form ng-submit="sendMsg()">
-                <input type="text" ng-message="chatMsg"><button>Send</button>
+            <form name="msgForm" novalidate ng-submit="sendMsg(msgForm.$valid)">
+                <input type="text" ng-model="chatMsg" required><button>Send</button>
             </form>
         </div>
     </div>
