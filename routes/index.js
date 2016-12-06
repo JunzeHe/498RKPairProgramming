@@ -9,6 +9,7 @@ module.exports = function (app, router) {
   app.use('/', require('./room.js')(router));
   app.use('/', require('./messages.js')(router));
   app.use('/', require('./edits.js')(router));
+  app.use('/', require('./users.js')(router));
 
   require('./sockets.js')(app);
 };
