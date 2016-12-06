@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 // Define our beer schema
 var MessageSchema   = new mongoose.Schema({
   dateCreated: Date,
-  userId: Number,
   userName: String,
   roomName: String,
   roomId: {
