@@ -32,8 +32,15 @@ PPControllers.controller('LandingController', [
         CommonData.setUsername($scope.username);
         Backend.getRoom($scope.roomId).then(function(res) {
           console.log(res);
-          CommonData.setRoom(res.data.data);
-          $location.url('/room');
+          var room = res.data.data;
+          if (room.users.includes($scope.username)) {
+            console.log("failure");
+            $scope.hasError = true;
+            $scope.error = "Duplicate username for room " + room.roomName + ". Please enter a unique username.";
+          } else {
+            CommonData.setRoom(room);
+            $location.url('/room');
+          }
         }, function(res) {
           console.log("failure");
           $scope.hasError = true;
@@ -60,7 +67,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
     });
   });
   $scope.sendMsg = function(isValid) {
-    if(!isValid) {
+    if (!isValid) {
       return;
     }
     socket.emit('chat message', {
