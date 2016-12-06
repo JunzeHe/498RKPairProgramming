@@ -22,18 +22,22 @@ h3 {
   display: flex;
   flex-direction: column;
   .code-box {
+    height: 100%;
     width: 100%;
-    flex: 100;
+    flex: 0 1 auto;
+    overflow: scroll;
+    .cm-container {
+      height: 100%;
+    }
+    .CodeMirror {
+      height: 100%;
+    }
   }
   .code-toolbar {
-    flex: 1;
+    flex: 0 0 auto;
     background-color: #cacaca;
-    margin-bottom: 0;
-    bottom: 0;
-    // position: fixed;
     width: 100%;
     padding: 0.9375rem;
-
     .icons {
       text-align: center;
     }
@@ -47,11 +51,9 @@ form {
 .chat {
   background-color: #3adb76;
   height: 100vh;
-
   button:focus {
-      outline:0;
-    }
-
+    outline: 0;
+  }
   .chat-toolbar {
     background-color: #3c3c3c;
     padding: 0.9375rem;
@@ -65,7 +67,6 @@ form {
     padding-left: 0.9375rem;
     padding-right: 0.9375rem;
     background-color: #cc8b00;
-
     textarea {
       resize: none;
     }

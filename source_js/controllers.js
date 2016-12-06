@@ -3,6 +3,7 @@ var PPControllers = angular.module('PPControllers', []);
 PPControllers.controller('LandingController', [
   '$scope', 'Backend', 'CommonData', '$location', '$routeParams',
   function($scope, Backend, CommonData, $location, $routeParams) {
+
     $scope.roomId = $routeParams.roomId;
     $scope.username = "";
     $scope.roomName = "";
@@ -52,6 +53,11 @@ PPControllers.controller('LandingController', [
 ]);
 
 PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', function($scope, Backend, CommonData) {
+  $scope.editorOptions = {
+    lineWrapping: true,
+    lineNumbers: true,
+    viewportMargin: Infinity
+  };
   $scope.room = CommonData.getRoom();
   $scope.username = CommonData.getUsername();
   $scope.chatMsg = "";
