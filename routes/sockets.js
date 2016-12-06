@@ -1,5 +1,7 @@
 var Message = require('../models/message');
+var Room = require('../models/room');
 var Edit = require('../models/edit');
+
 module.exports = function(io){
   io.on('connection', function(socket){
     console.log("socket connected");
@@ -33,6 +35,24 @@ module.exports = function(io){
         else
           io.emit('response', {message:"Edit stored", data: createdEdit});
       });
+    });
+
+
+    var userName = "";
+    var roomId = "";
+    socket.on('store username and roomId', function(data){
+      userName = data.username;
+      roomId = data.roomId
+    });
+
+    socket.on('disconnect', function(){
+      Room.findByIdAndUpdate(roomId,
+        {$pull: {"users":userName}},
+        {new: true},
+        function(err, newRoom){
+
+        }
+      );
     });
   });
 

@@ -71,8 +71,12 @@ Sample code in `source_js/controllers.js`
   - Returns all message for a room with roomId
   - Returns messages for every room if roomId is empty
 - **GET /api/room/:roomId
-  - Returns the entire room object, most importantly the roomName
+  - Returns the entire room object, most importantly the roomName, and the users
 - **POST /api/room**
-  - POST data should have {roomName: \<room name\>}
+  - POST data should have {roomName: \<room name\>, userName: \<user name\>}
   - Use this **ONLY** when you are creating a completely new room
   - Returns the room that was created. Store the `__id` as the `roomId`
+- **POST /api/room/:roomId/**
+  - POST data should have {userName: \<user name\>}
+  - Add user to the room
+  - Use when user is joining the room
