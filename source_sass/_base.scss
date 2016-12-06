@@ -1,4 +1,53 @@
 // Add any custom Sass & CSS here
+
+body, h1, h2, h3 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
 #fire{
   color:red;
   }
+
+.row {
+  max-width: none;
+}
+
+.code {
+  background-color: #147cc0;
+  height: 100vh;
+}
+
+form {
+  display: inline;
+}
+
+.chat {
+  background-color: #3adb76;
+  height: 100vh;
+
+  .chat-toolbar {
+    background-color: #3c3c3c;
+    padding: 0.9375rem;
+  }
+
+  .chat-msg {
+    background-color: #da3116;
+    height: calc(100vh - 160px);
+  }
+
+  .chat-input {
+    padding-top: 0.9375rem;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    background-color: #cc8b00;
+    //.chat-send-button {
+    //  text-align: right;
+    //}
+  }
+
+    .input-group-button {
+      padding-left: 0.9375rem;
+    }
+
+}
