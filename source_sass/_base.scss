@@ -1,13 +1,15 @@
 // Add any custom Sass & CSS here
-
-body, h1, h2, h3 {
+body,
+h1,
+h2,
+h3 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
 }
 
-#fire{
-  color:red;
-  }
+#fire {
+  color: red;
+}
 
 .row {
   max-width: none;
@@ -25,17 +27,14 @@ form {
 .chat {
   background-color: #3adb76;
   height: 100vh;
-
   .chat-toolbar {
     background-color: #3c3c3c;
     padding: 0.9375rem;
   }
-
   .chat-msg {
     background-color: #da3116;
     height: calc(100vh - 160px);
   }
-
   .chat-input {
     padding-top: 0.9375rem;
     padding-left: 0.9375rem;
@@ -45,9 +44,11 @@ form {
     //  text-align: right;
     //}
   }
+  .input-group-button {
+    padding-left: 0.9375rem;
+  }
+}
 
-    .input-group-button {
-      padding-left: 0.9375rem;
-    }
-
+.message-time {
+  font-size: rem-calc(12);
 }
