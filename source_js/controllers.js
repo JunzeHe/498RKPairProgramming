@@ -50,7 +50,10 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
   $scope.chatMsg = "";
   $scope.serverResponses = [];
 
+  Backend.joinRoom($scope.room._id, $scope.username);
+
   var socket = io();
+  socket.emit('store username and roomId', {username: $scope.username, roomId: $scope.room._id});
   socket.on('response', function(res){
     $scope.$apply(function(){
       $scope.serverResponses.push(res.data);
@@ -64,7 +67,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
       dateCreated: new Date(),
       userName: $scope.username,
       roomName: $scope.room.roomName,
-      roomId: $scope.room.roomId,
+      roomId: $scope.room._id,
       message: $scope.chatMsg
     });
     $scope.chatMsg = "";
