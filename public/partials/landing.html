@@ -1,5 +1,5 @@
 <div class="row">
-  <div ng-if="!roomId" class="columns small-6 small-offset-3">
+  <div ng-show="!roomId" class="columns small-6 small-offset-3">
     <h1 class="text-center">Start A Room</h1>
     <form novalidate name="roomForm" ng-submit="createRoom(roomForm.$valid)">
       <label>
@@ -14,7 +14,7 @@
       <p ng-show="hasError" class="alert callout">Error: {{error}}</p>
     </form>
   </div>
-  <div ng-if="roomId" class="columns small-6 small-offset-3">
+  <div ng-show="roomId" class="columns small-6 small-offset-3">
     <h1 class="text-center">Join A Room</h1>
     <form novalidate name="roomForm" ng-submit="joinRoom(roomForm.$valid)">
       <label>
