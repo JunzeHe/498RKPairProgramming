@@ -68,6 +68,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
   $scope.username = CommonData.getUsername();
   $scope.chatMsg = "";
   $scope.serverResponses = [];
+  $scope.messages = [];
 
   Backend.joinRoom($scope.room._id, $scope.username);
 
@@ -95,13 +96,24 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
     if (!isValid) {
       return;
     }
-    socket.emit('chat message', {
+
+    var message = {
       dateCreated: new Date(),
       userName: $scope.username,
       roomName: $scope.room.roomName,
       roomId: $scope.room._id,
       message: $scope.chatMsg
-    });
+    }
+    socket.emit('chat message',message);
+    $scope.messages.push(message);
     $scope.chatMsg = "";
   }
+
+  socket.on('new chat message', function(data){
+    $scope.$apply(function(){$scope.messages.push(data.data);});
+  });
+
+  socket.on('new edit', function(data){
+    //Handle incoming edits from other people here
+  });
 }]);

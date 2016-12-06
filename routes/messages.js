@@ -10,11 +10,6 @@ module.exports = function(router){
     if(roomId)
       query = query.where({roomId: roomId})
 
-    if("sortBy" in req.query)
-      query.sort(req.query.sortBy);
-    else
-      query.sort("-dateCreated");
-
     query
     .then(function(messages){
       res.json({message: "Messages", data: messages});

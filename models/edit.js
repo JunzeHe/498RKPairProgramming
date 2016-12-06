@@ -7,7 +7,7 @@ var EditSchema   = new mongoose.Schema({
   userName: String,
   roomName: String,
   roomId: {
-    type: Number,
+    type: String,
     index: true
   },
   edit: String
