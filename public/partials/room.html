@@ -12,14 +12,19 @@
 
             </div>
             <div class="medium-12 columns chat-msg">
-                Chat Messages
+                <p ng-repeat="message in serverResponses">{{message.userName}} : {{message.message}}</p>
             </div>
             <div class="medium-12 columns chat-input">
-                <form action="">
+                <form name="msgForm" novalidate ng-submit="sendMsg(msgForm.$valid)">
                     <div class="input-group">
-                        <textarea rows="2" placeholder="Enter Message" class="input-group-field"></textarea>
+                        <!-- <textarea rows="2" placeholder="Enter Message" class="input-group-field"></textarea>
                         <div class="input-group-button">
                             <input type="submit" class="button" value="Send">
+                        </div> -->
+
+                        <textarea rows="2" ng-model="chatMsg" required class="input-group-field"></textarea>
+                        <div class="input-group-button">
+                            <button type="submit" class="button">Submit</button>
                         </div>
                     </div>
                 </form>
