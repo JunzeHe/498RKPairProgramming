@@ -3,7 +3,6 @@ var PPServices = angular.module('PPServices', ['ngStorage']);
 PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
   var username = $sessionStorage.username;
   var room = $sessionStorage.room;
-  $sessionStorage.messages = [];
   return {
     getUsername: function() {
       return username;
@@ -20,9 +19,14 @@ PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
     setMessages: function(newMessages){
       if(newMessages && newMessages.length > 0)
         $sessionStorage.messages = newMessages;
+      else
+        $sessionStorage.messages = [];
     },
     getMessages: function(){
+      if(!$sessionStorage.messages)
+        $sessionStorage.messages = []
       return $sessionStorage.messages;
+
     },
     setEdits: function(newEdits){
       $sessionStorage.edits = newEdits;
