@@ -58,6 +58,12 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
     lineNumbers: true,
     viewportMargin: Infinity
   };
+  $scope.codemirrorLoaded = function(_editor) {
+    _editor.focus();
+    _editor.setValue("console.log('Hello world!');");
+    _editor.setCursor({line: 1, ch: 0})
+  }
+
   $scope.room = CommonData.getRoom();
   $scope.username = CommonData.getUsername();
   $scope.chatMsg = "";
