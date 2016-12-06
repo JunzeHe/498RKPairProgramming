@@ -7,12 +7,20 @@ module.exports = function(router) {
     if(!req.params.roomId){
       if('roomName' in req.body && req.body['roomName'].length > 0){
         var roomName = req.body['roomName'];
-        var room = new Room({roomName: roomName, users: []});
+        var room = new Room({
+          roomName: roomName,
+          users: [],
+          password: ""
+        });
 
         if('userName' in req.body && req.body['userName'].length > 0)
           room.users.push(req.body['userName']);
 
+        if('password' in req.body && req.body['password'].length > 0)
+          room.password = req.body['password'];
+
         room.save(function(err, createdRoom){
+          createdRoom.password = "";
           if(err)
             res.json({message: "There was an error", data: err});
           else
@@ -39,7 +47,7 @@ module.exports = function(router) {
     if(!req.params.roomId)
       res.json({message:"No room id supplied", data: null});
     else{
-      Room.findById(req.params.roomId)
+      Room.findById(req.params.roomId,"-password")
         .then(function(room){
           res.json({message:"Room retrieved", data: room});
         })
