@@ -1,5 +1,6 @@
 // Add any custom Sass & CSS here
 
+
 body, h1, h2, h3 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
@@ -16,6 +17,20 @@ body, h1, h2, h3 {
 .code {
   background-color: #147cc0;
   height: 100vh;
+  padding: 0;
+
+  .code-toolbar {
+    background-color: #cacaca;
+    margin-bottom: 0;
+    bottom: 0;
+    position: fixed;
+    width: inherit;
+    padding: 0.9375rem;
+
+    .icons {
+      text-align: center;
+    }
+  }
 }
 
 form {
@@ -26,6 +41,10 @@ form {
   background-color: #3adb76;
   height: 100vh;
 
+  button:focus {
+      outline:0;
+    }
+
   .chat-toolbar {
     background-color: #3c3c3c;
     padding: 0.9375rem;
@@ -33,7 +52,7 @@ form {
 
   .chat-msg {
     background-color: #da3116;
-    height: calc(100vh - 160px);
+    height: calc(100vh - 134px);
   }
 
   .chat-input {
@@ -41,9 +60,10 @@ form {
     padding-left: 0.9375rem;
     padding-right: 0.9375rem;
     background-color: #cc8b00;
-    //.chat-send-button {
-    //  text-align: right;
-    //}
+
+    textarea {
+      resize: none;
+    }
   }
 
     .input-group-button {
