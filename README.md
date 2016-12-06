@@ -70,6 +70,8 @@ Sample code in `source_js/controllers.js`
 - **GET /api/messages/:roomId?**
   - Returns all message for a room with roomId
   - Returns messages for every room if roomId is empty
+- **GET /api/room/:roomId
+  - Returns the entire room object, most importantly the roomName
 - **POST /api/room**
   - POST data should have {roomName: \<room name\>}
   - Use this **ONLY** when you are creating a completely new room
