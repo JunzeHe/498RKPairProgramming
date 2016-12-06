@@ -3,4 +3,13 @@
     <p>Username: {{username}}</p>
     <p>Room Name: {{room.roomName}}</p>
     <p>Room id: {{room._id}}</p>
+    <div id="message_container">
+        <div id="message_topbar"></div>
+        <div id="message_panel"></div>
+        <div id="message_input">
+            <form ng-submit="sendMsg()">
+                <input type="text" ng-message="chatMsg"><button>Send</button>
+            </form>
+        </div>
+    </div>
 </div>

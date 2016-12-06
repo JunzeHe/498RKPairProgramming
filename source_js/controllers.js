@@ -47,4 +47,15 @@ PPControllers.controller('LandingController', [
 PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', function($scope, Backend, CommonData) {
   $scope.room = CommonData.getRoom();
   $scope.username = CommonData.getUsername();
+  $scope.chatMsg = "";
+  var socket = io();
+  $scope.sendMsg = function() {
+    socket.emit('chat message', {
+      dateCreated: new Date(),
+      userName: $scope.username,
+      roomName: $scope.room.roomName,
+      roomId: $scope.room.roomId,
+      message: $scope.chatMsg
+    });
+  }
 }]);
