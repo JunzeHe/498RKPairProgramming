@@ -1,9 +1,10 @@
 // Load required packages
 var mongoose = require('mongoose');
 
-// Define our beer schema
+// Define our user schema
 var RoomSchema   = new mongoose.Schema({
-  roomName: String
+  roomName: String,
+  users: [String]
 });
 
 // Export the Mongoose model
