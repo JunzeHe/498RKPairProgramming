@@ -49,20 +49,20 @@ PPControllers.controller('LandingController', [
         });
 
         Backend.getMessages($scope.roomId)
-        .then(function(messages){
-          CommonData.setMessages(messages.data.data);
-        });
+          .then(function(messages) {
+            CommonData.setMessages(messages.data.data);
+          });
 
         Backend.getEdits($scope.roomId)
-        .then(function(edits){
-          CommonData.setEdits(edits.data.data);
-        });
+          .then(function(edits) {
+            CommonData.setEdits(edits.data.data);
+          });
       }
     }
   }
 ]);
 
-PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', function($scope, Backend, CommonData) {
+PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '$mdPanel', function($scope, Backend, CommonData, $mdPanel) {
   $scope.editorOptions = {
     lineWrapping: true,
     lineNumbers: true,
@@ -71,7 +71,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
   $scope.codemirrorLoaded = function(_editor) {
     _editor.focus();
     _editor.setValue("console.log('Hello world!');");
-    _editor.setCursor({line: 1, ch: 0})
+    _editor.setCursor({ line: 1, ch: 0 })
   }
 
   $scope.room = CommonData.getRoom();
@@ -80,24 +80,70 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
   $scope.serverResponses = [];
   $scope.messages = CommonData.getMessages();
 
+
+  $scope.shareLink = false;
+  $scope.toggleShareLink = function($event) {
+    console.log("toggle clicked", $scope.shareLink);
+    if($scope.shareLink == true) {
+      $scope.hideShareLink($event);
+    } else {
+      $scope.showShareLink($event);
+    }
+  }
+  $scope.showShareLink = function($event) {
+    $scope.shareLink = true;
+    console.log("show share link", $scope.shareLink);
+    var panelPosition = $mdPanel.newPanelPosition().absolute('.share-link')
+      .centerHorizontally().centerVertically();
+
+    var config = {
+      attachTo: angular.element(document.body),
+      position: panelPosition,
+      targetEvent: $event,
+      template: '<md-card class="share-link-box"><md-card-content><h2>Share this link!</h2><p>localhost:3000/#/landing/' + $scope.room._id + '</p></md-card-content></md-card>',
+      clickOutsideToClose: true,
+      escapeToClose: true,
+      focusOnOpen: true,
+      hasBackdrop: true,
+      disableParentScroll: true,
+      onDomRemoved: function() {
+        $scope.shareLink = false;
+        console.log($scope.shareLink);
+      }
+    }
+
+    $mdPanel.open(config)
+      .then(function(result) {
+        $scope.mdPanelRef = result;
+      });
+  }
+
+  $scope.hideShareLink = function($event) {
+    var panelRef = $scope.mdPanelRef;
+    console.log("hiding", $scope.shareLink);
+    panelRef.close().then(function() {
+      angular.element(document.querySelector('.share-link')).focus();
+      panelRef.destroy();
+    });
+  }
   Backend.joinRoom($scope.room._id, $scope.username);
 
   var socket = io();
-  socket.emit('store username and roomId', {username: $scope.username, roomId: $scope.room._id});
-  socket.on('response', function(res){
-    $scope.$apply(function(){
+  socket.emit('store username and roomId', { username: $scope.username, roomId: $scope.room._id });
+  socket.on('response', function(res) {
+    $scope.$apply(function() {
       $scope.serverResponses.push(res.data);
     });
   });
 
-  socket.on('new user', function(newUserName){
+  socket.on('new user', function(newUserName) {
     room = CommonData.getRoom();
     room.users.push(newUserName);
     CommonData.setRoom(room);
     $scope.room = room;
   });
 
-  socket.on('user has left room', function(oldUserName){
+  socket.on('user has left room', function(oldUserName) {
     room = CommonData.getRoom();
     room.users.splice(room.users.indexOf(oldUserName), 1);
     CommonData.setRoom(room);
@@ -116,16 +162,16 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
       roomId: $scope.room._id,
       message: $scope.chatMsg
     }
-    socket.emit('chat message',message);
+    socket.emit('chat message', message);
     $scope.messages.push(message);
     $scope.chatMsg = "";
   }
 
-  socket.on('new chat message', function(data){
-    $scope.$apply(function(){$scope.messages.push(data.data);});
+  socket.on('new chat message', function(data) {
+    $scope.$apply(function() { $scope.messages.push(data.data); });
   });
 
-  socket.on('new edit', function(data){
+  socket.on('new edit', function(data) {
     //Handle incoming edits from other people here
   });
 }]);
