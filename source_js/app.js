@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'PPControllers', 'PPServices']);
+var app = angular.module('app', ['ngRoute', 'PPControllers', 'PPServices', 'ui.codemirror']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
