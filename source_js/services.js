@@ -3,6 +3,7 @@ var PPServices = angular.module('PPServices', ['ngStorage']);
 PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
   var username = $sessionStorage.username;
   var room = $sessionStorage.room;
+  $sessionStorage.messages = [];
   return {
     getUsername: function() {
       return username;
@@ -15,6 +16,19 @@ PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
     },
     setRoom: function(newRoom) {
       room = $sessionStorage.room = newRoom;
+    },
+    setMessages: function(newMessages){
+      if(newMessages && newMessages.length > 0)
+        $sessionStorage.messages = newMessages;
+    },
+    getMessages: function(){
+      return $sessionStorage.messages;
+    },
+    setEdits: function(newEdits){
+      $sessionStorage.edits = newEdits;
+    },
+    getEdits: function(){
+      return $sessionStorage.edits;
     }
   }
 }]);
@@ -27,10 +41,16 @@ PPServices.factory('Backend', ['$http', function($http) {
       return $http.post(baseUrl + "/room", {roomName: roomName});
     },
     getRoom: function(roomId) {
-      return $http.get(baseUrl + "/room/" + roomId.toString());
+      return $http.get(baseUrl + "/room/" + roomId);
     },
     joinRoom: function(roomId, userName){
-      return $http.post(baseUrl + "/room/"+ roomId.toString(),{userName: userName});
+      return $http.post(baseUrl + "/room/"+ roomId,{userName: userName});
+    },
+    getMessages: function(roomId){
+      return $http.get(baseUrl + "/messages/" + roomId);
+    },
+    getEdits: function(roomId){
+      return $http.get(baseUrl + "/edits/" + roomId);
     }
   }
 }]);

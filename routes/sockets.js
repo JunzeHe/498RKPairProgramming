@@ -29,10 +29,13 @@ module.exports = function(io){
     socket.on('chat message', function(msg){
       var message = new Message(msg);
       message.save(function(err, createdMsg){
-        if(err)
+        if(err){
+          console.log(err);
           socket.emit("response", {message: "There was an error", data: err});
-        else
-          io.to(roomId).emit('response', {message: "Message stored", data: createdMsg});
+        }
+        else{
+          socket.broadcast.to(roomId).emit('new chat message', {message: "Message stored", data: createdMsg});
+        }
       });
     })
 
@@ -42,7 +45,7 @@ module.exports = function(io){
         if(err)
           socket.emit('response', {message:"There was an error", data: err});
         else
-          io.to(roomId).emit('response', {message:"Edit stored", data: createdEdit});
+          socket.broadcast.to(roomId).emit('new edit', {message:"Edit stored", data: createdEdit});
       });
     });
   });

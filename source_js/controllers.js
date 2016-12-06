@@ -47,6 +47,16 @@ PPControllers.controller('LandingController', [
           $scope.hasError = true;
           $scope.error = res;
         });
+
+        Backend.getMessages($scope.roomId)
+        .then(function(messages){
+          CommonData.setMessages(messages.data.data);
+        });
+
+        Backend.getEdits($scope.roomId)
+        .then(function(edits){
+          CommonData.setEdits(edits.data.data);
+        });
       }
     }
   }
@@ -68,6 +78,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
   $scope.username = CommonData.getUsername();
   $scope.chatMsg = "";
   $scope.serverResponses = [];
+  $scope.messages = CommonData.getMessages();
 
   Backend.joinRoom($scope.room._id, $scope.username);
 
@@ -83,25 +94,38 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', f
     room = CommonData.getRoom();
     room.users.push(newUserName);
     CommonData.setRoom(room);
+    $scope.room = room;
   });
 
   socket.on('user has left room', function(oldUserName){
     room = CommonData.getRoom();
     room.users.splice(room.users.indexOf(oldUserName), 1);
     CommonData.setRoom(room);
+    $scope.room = room;
   });
 
   $scope.sendMsg = function(isValid) {
     if (!isValid) {
       return;
     }
-    socket.emit('chat message', {
+
+    var message = {
       dateCreated: new Date(),
       userName: $scope.username,
       roomName: $scope.room.roomName,
       roomId: $scope.room._id,
       message: $scope.chatMsg
-    });
+    }
+    socket.emit('chat message',message);
+    $scope.messages.push(message);
     $scope.chatMsg = "";
   }
+
+  socket.on('new chat message', function(data){
+    $scope.$apply(function(){$scope.messages.push(data.data);});
+  });
+
+  socket.on('new edit', function(data){
+    //Handle incoming edits from other people here
+  });
 }]);
