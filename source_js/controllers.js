@@ -80,6 +80,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   }
 
   $scope.room = CommonData.getRoom();
+  console.log($scope.room)
   $scope.username = CommonData.getUsername();
   $scope.chatMsg = "";
   $scope.serverResponses = [];
@@ -105,7 +106,13 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
       attachTo: angular.element(document.body),
       position: panelPosition,
       targetEvent: $event,
-      template: '<md-card class="share-link-box"><md-card-content><h2>Share this link!</h2><p>localhost:3000/#/landing/' + $scope.room._id + '</p></md-card-content></md-card>',
+      // templateUrl: './partials/shareLink.html',
+      template: '<md-card class="share-link-box"><md-card-title>' +
+        '<md-card-title-text><h2>Click to copy this link:</h2></md-card-title-text></md-card-title>' +
+        '<md-card-content><span id="share-link-text" value="localhost:3000/#/landing/' + $scope.room._id +
+        '" ngclipboard data-clipboard-target="#share-link-text">' +
+        'localhost:3000/#/landing/' + $scope.room._id + '</span>' + 
+        '</md-card-content></md-card>',
       clickOutsideToClose: true,
       escapeToClose: true,
       focusOnOpen: true,
