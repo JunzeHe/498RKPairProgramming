@@ -40,7 +40,8 @@ PPControllers.controller('LandingController', [
           if (room.users.includes($scope.username)) {
             console.log("failure");
             $scope.hasError = true;
-            $scope.error = "Duplicate username for room " + room.roomName + ". Please enter a unique username.";
+            $scope.error = "Duplicate username for room " + 
+              room.roomName + ". Please enter a unique username.";
           } else {
             CommonData.setRoom(room);
             $location.url('/room');
@@ -50,7 +51,7 @@ PPControllers.controller('LandingController', [
           $scope.hasError = true;
           $scope.invalidPassword = true;
           $scope.error = res;
-          if(res.status == 401)
+          if (res.status == 401)
             $scope.error = "Incorrect password."
         });
 
@@ -68,7 +69,8 @@ PPControllers.controller('LandingController', [
   }
 ]);
 
-PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '$mdPanel', function($scope, Backend, CommonData, $mdPanel) {
+PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '$mdPanel',
+  function($scope, Backend, CommonData, $mdPanel) {
   var socket = io();
   $scope.room = CommonData.getRoom();
   console.log($scope.room)
@@ -203,15 +205,20 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     //   });
     // var changesMade = doc.historySize().undo + doc.historySize().redo;
     var justSynced = false;
-    _editor.on("change", function(instance, changeObjs) {
-      if(justSynced == false) {
+    _editor.on("change", function(instance, changeObj) {
+      // console.log(changeObj)
+      cursor = doc.getCursor();
+      // console.log(cursor)
+      if (justSynced == false) {
         var edit = {
           dateCreated: new Date(),
           userName: $scope.username,
           roomName: $scope.room.roomName,
           roomId: $scope.room._id,
-          edit: doc.getValue()
+          edit: doc.getValue(),
+          changeObj: changeObj
         }
+        // console.log("emitting", edit)
         socket.emit('new edit', edit);
         // if(changesMade != doc.historySize().undo + doc.historySize().redo) {
         //   console.log("history changed size");
@@ -220,16 +227,55 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
       } else {
         justSynced = false;
       }
-      
     })
 
+    function convertToCursorChange(changeObj, cursor) {
+      if(changeObj == undefined) {
+        return cursor;
+      }
+      console.log("changeObj", changeObj)
+      console.log("cursor",cursor)
+      var newCursor = cursor;
+      if (changeObj.from.line < newCursor.line) {
+        if (changeObj.origin == "+input") {
+          if(changeObj.text.length == 2) {
+            newCursor.line++;
+          }
+        } else if (changeObj.origin == "+delete") {
+          if(changeObj.removed.length == 2) {
+            newCursor.line--;
+          }
+        }
+      } else if (changeObj.from.line == newCursor.line &&
+        changeObj.from.ch <= newCursor.ch) {
+        if (changeObj.origin == "+input") {
+          if(changeObj.text.length == 2) {
+            newCursor.line++;
+            newCursor.ch = newCursor.ch - changeObj.from.ch;
+          } else {
+            newCursor.ch++;
+          }
+        } else if (changeObj.origin == "+delete") {
+          if(changeObj.removed.length == 2) {
+            newCursor.line--;
+            newCursor.ch = 200;
+          } else {
+            newCursor.ch--;
+          }
+        }
+      }
+      return newCursor;
+    }
     socket.on('new edit', function(data) {
-      $scope.edit = data.data;
       var cursor = doc.getCursor();
+      $scope.edit = data.data;
+      console.log
+      var updatedCursor = convertToCursorChange($scope.edit.changeObj, cursor);
+      console.log(updatedCursor)
       console.log($scope.edit.edit)
       justSynced = true;
       doc.setValue($scope.edit.edit)
-      doc.setCursor(cursor);
+      doc.setCursor(updatedCursor);
     });
 
   }
