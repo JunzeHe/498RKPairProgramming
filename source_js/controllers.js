@@ -40,7 +40,7 @@ PPControllers.controller('LandingController', [
           if (room.users.includes($scope.username)) {
             console.log("failure");
             $scope.hasError = true;
-            $scope.error = "Duplicate username for room " + 
+            $scope.error = "Duplicate username for room " +
               room.roomName + ". Please enter a unique username.";
           } else {
             CommonData.setRoom(room);
@@ -111,7 +111,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
       targetEvent: $event,
       // templateUrl: './partials/shareLink.html',
       template: '<md-card class="share-link-box"><md-card-title>' +
-        '<md-card-title-text><h2>Click to copy this link:</h2></md-card-title-text></md-card-title>' +
+        '<md-card-title-text><h2>Click link to copy:</h2></md-card-title-text></md-card-title>' +
         '<md-card-content><span id="share-link-text" value="' + host + '/#/landing/' + $scope.room._id +
         '" ngclipboard data-clipboard-target="#share-link-text">' +
         host + '/#/landing/' + $scope.room._id + '</span>' +
@@ -235,7 +235,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
         // if(changesMade != doc.historySize().undo + doc.historySize().redo) {
         //   console.log("history changed size");
         // }
-        // changesMade = doc.historySize().undo + doc.historySize().redo  
+        // changesMade = doc.historySize().undo + doc.historySize().redo
       } else {
         justSynced = false;
       }
