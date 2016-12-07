@@ -37,9 +37,25 @@ module.exports = function(router){
     })
   });
 
+  var runCode = function(code, callback){
+    var url = "http://api.hackerearth.com/code/run/";
+    var client_secret_key = "6b818819b695ff01f3554203d3cf113bd4e2b478";
 
+    callback();
+    }
 
+  editsRoute.post(function(req, res){
+    var code = req.body.edit;
+    if(!code){
+      Edit.findOne({roomId: req.params.roomId, dateCreated: {$lte: (new Date()).toString()}}).sort("-dateCreated")
+      .then(function(recentEdit){
+        console.log(recentEdit);
+        code = recentEdit.edit;
+        runCode(code, function(){res.json({message: "Code ran"})});
+      });
+    }
 
-
+    runCode(code, function(){res.json({message: "Code ran"})});
+  });
   return router;
 };
