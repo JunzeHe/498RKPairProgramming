@@ -15,7 +15,7 @@ PPControllers.controller('LandingController', [
       console.log(isValid);
       if (isValid) {
         CommonData.setUsername($scope.username);
-        Backend.createRoom($scope.roomName).then(function(res) {
+        Backend.createRoom($scope.roomName, $scope.roomPassword).then(function(res) {
           console.log(res);
           CommonData.setRoom(res.data.data);
           $location.url('/room');
@@ -30,6 +30,7 @@ PPControllers.controller('LandingController', [
       $scope.submitted = true;
       $scope.error = "";
       $scope.hasError = false;
+      $scope.invalidPassword = false;
       if (isValid) {
         CommonData.setUsername($scope.username);
         Backend.getRoom($scope.roomId, $scope.roomPassword).then(function(res) {
@@ -46,7 +47,10 @@ PPControllers.controller('LandingController', [
         }, function(res) {
           console.log("failure");
           $scope.hasError = true;
+          $scope.invalidPassword = true;
           $scope.error = res;
+          if(res.status == 401)
+            $scope.error = "Incorrect password."
         });
 
         Backend.getMessages($scope.roomId)

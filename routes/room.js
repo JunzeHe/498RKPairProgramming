@@ -16,35 +16,22 @@ module.exports = function(router) {
         if('userName' in req.body && req.body['userName'].length > 0)
           room.users.push(req.body['userName']);
 
-        if('password' in req.body && req.body['password'].length > 0)
-          room.password = req.body['password'];
+        if('roomPassword' in req.body && req.body['roomPassword'].length > 0)
+          room.password = req.body['roomPassword'];
 
         room.save(function(err, createdRoom){
           createdRoom.password = "";
           if(err)
             res.json({message: "There was an error", data: err});
-          else
+          else{
             res.json({message: "Room Created", data: createdRoom});
+            }
         });
       }
     }
     else{
     //Player 1 has entered the game
-      // Room.findOne({_id: req.params.roomId, password: req.body.password})
-      // .then(function(room){
-      //   if(!room){
-      //     res.send("Room not found");
-      //   }
-      //   else{
-      //     console.log("Room Found");
-      //     console.log(room);
-      //     res.json({message: "Room Found", data: room});
-      //   }
-      // })
-      // .catch(function(err){
-      //   res.status(404).json({message: "Error finding room", data: err});
-      // });
-      Room.findByIdAndUpdate(
+       Room.findByIdAndUpdate(
         req.params.roomId,
         {$push: {"users": req.body.userName}},
         {new: true},
@@ -61,7 +48,6 @@ module.exports = function(router) {
     if(!req.params.roomId)
       res.json({message:"No room id supplied", data: null});
     else{
-      console.log(req.query);
       Room.findOne({_id: req.params.roomId, password:req.query.password})
         .then(function(room){
           if(room){
