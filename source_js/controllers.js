@@ -79,6 +79,11 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   $scope.serverResponses = [];
   $scope.messages = CommonData.getMessages();
   $scope.edit = CommonData.getEdit();
+  $scope.language = "python"
+  $scope.changeLanguage = function() {
+    console.log("change language to", $scope.language)
+    $scope.cmEditor.setOption("mode", $scope.language)
+  }
   console.log("edits", $scope.edits)
 
 
@@ -183,10 +188,12 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   $scope.editorOptions = {
     lineWrapping: true,
     lineNumbers: true,
-    viewportMargin: Infinity
+    viewportMargin: Infinity,
+    mode: $scope.language
   };
 
   $scope.codemirrorLoaded = function(_editor) {
+    $scope.cmEditor = _editor;
     _editor.focus();
     _editor.setValue("console.log('Hello world!');");
     _editor.setCursor({ line: 1, ch: 0 })
