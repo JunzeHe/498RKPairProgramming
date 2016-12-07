@@ -10,6 +10,7 @@ module.exports = function(io){
     socket.on('store username and roomId', function(data){
       userName = data.username;
       roomId = data.roomId.toString();
+      console.log(userName, roomId, "joined")
 
       socket.join(roomId);
       socket.broadcast.to(roomId).emit('new user', userName);

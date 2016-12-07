@@ -141,16 +141,18 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
       panelRef.destroy();
     });
   }
-  if($scope.room.users.includes($scope.username) == false){
-    console.log("room", $scope.room)
-    console.log("user", $scope.user)
-    Backend.joinRoom($scope.room._id, $scope.username).then(function(res) {
-      CommonData.setRoom(res.data.data)
-      console.log(res.data.data)
-      $scope.room = CommonData.getRoom();
-      console.log($scope.room)
-    });
-  }
+
+  Backend.joinRoom($scope.room._id, $scope.username);
+  // if($scope.room.users.includes($scope.username) == false){
+  //   console.log("room", $scope.room)
+  //   console.log("user", $scope.user)
+  //   Backend.joinRoom($scope.room._id, $scope.username).then(function(res) {
+  //     CommonData.setRoom(res.data.data)
+  //     console.log(res.data.data)
+  //     $scope.room = CommonData.getRoom();
+  //     console.log($scope.room)
+  //   });
+  // }
 
   socket.emit('store username and roomId', { username: $scope.username, roomId: $scope.room._id });
   socket.on('response', function(res) {
