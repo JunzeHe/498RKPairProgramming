@@ -7,6 +7,7 @@ PPControllers.controller('LandingController', [
     $scope.roomId = $routeParams.roomId;
     $scope.username = "";
     $scope.roomName = "";
+    CommonData.reset();
     $scope.createRoom = function(isValid) {
       $scope.submitted = true;
       $scope.error = "";
