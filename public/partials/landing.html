@@ -12,17 +12,15 @@
             <input type="text" name="name" placeholder="Room Name" required ng-model="roomName" ng-class="{'invalid-input':roomForm.roomName.$invalid && submitted}">
             <p ng-show="roomForm.roomName.$invalid && submitted" class="help-text-invalid help-text">Roomname is required.</p>
           </label>
-
-
-
+          <label>
+            <input type="text" name="roomPassword" placeholder="Room Password" ng-model="roomPassword" ng-class="{'invalid-input':roomForm.username.$invalid && submitted}">
+          </label>
           <div class="row">
             <div class="small-6 small-centered text-center columns">
               <button class="button" type="submit">Create</button>
               <p ng-show="hasError" class="alert callout">Error: {{error}}</p>
             </div>
           </div>
-
-
         </form>
       </div>
       <div ng-show="roomId">
@@ -32,19 +30,18 @@
             <input type="text" name="username" placeholder="Username" required ng-model="username" ng-class="{'invalid-input':roomForm.username.$invalid && submitted}">
             <p ng-show="roomForm.username.$invalid && submitted" class="help-text-invalid help-text">Username is required.</p>
           </label>
-
-
+          <label>
+            <input type="text" name="roomPassword" placeholder="Room Password" ng-model="roomPassword" ng-class="{'invalid-input':roomForm.username.$invalid && submitted}">
+          </label>
           <div class="row">
             <div class="small-6 small-centered text-center columns">
               <button class="button" type="submit">Join</button>
               <p ng-show="hasError" class="alert callout">Error: {{error}}</p>
             </div>
           </div>
-
         </form>
       </div>
     </div>
   </div>
-
 </div>
 

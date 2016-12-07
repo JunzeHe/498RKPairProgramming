@@ -1,9 +1,15 @@
-var PPServices = angular.module('PPServices', ['ngStorage']);
+ var PPServices = angular.module('PPServices', ['ngStorage']);
 
 PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
   var username = $sessionStorage.username;
   var room = $sessionStorage.room;
   return {
+    reset: function() {
+      $sessionStorage.username = "";
+      $sessionStorage.room = "";
+      $sessionStorage.messages = "";
+      $sessionStorage.edits = "";
+    },
     getUsername: function() {
       return username;
     },
@@ -28,11 +34,12 @@ PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
       return $sessionStorage.messages;
 
     },
-    setEdits: function(newEdits){
-      $sessionStorage.edits = newEdits;
+    setEdit: function(newEdit){
+      console.log("newEdit", newEdit)
+      $sessionStorage.edit = newEdit;
     },
-    getEdits: function(){
-      return $sessionStorage.edits;
+    getEdit: function(){
+      return $sessionStorage.edit;
     }
   }
 }]);
@@ -41,11 +48,11 @@ PPServices.factory('Backend', ['$http', function($http) {
   var baseUrl = "/api";
 
   return {
-    createRoom: function(roomName) {
-      return $http.post(baseUrl + "/room", {roomName: roomName});
+    createRoom: function(roomName, roomPassword) {
+      return $http.post(baseUrl + "/room", {roomName: roomName, roomPassword: roomPassword});
     },
-    getRoom: function(roomId) {
-      return $http.get(baseUrl + "/room/" + roomId);
+    getRoom: function(roomId, roomPassword) {
+      return $http.get(baseUrl + "/room/" + roomId, {params:{password: roomPassword}});
     },
     joinRoom: function(roomId, userName){
       return $http.post(baseUrl + "/room/"+ roomId,{userName: userName});
@@ -53,8 +60,8 @@ PPServices.factory('Backend', ['$http', function($http) {
     getMessages: function(roomId){
       return $http.get(baseUrl + "/messages/" + roomId);
     },
-    getEdits: function(roomId){
-      return $http.get(baseUrl + "/edits/" + roomId);
+    getEdits: function(roomId, paramObj){
+      return $http.get(baseUrl + "/edits/" + roomId, {params : paramObj});
     }
   }
 }]);
