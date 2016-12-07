@@ -209,11 +209,15 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     var justSynced = false;
     Backend.getEdits($scope.room._id)
       .then(function(edits) {
-        CommonData.setEdit(edits.data.data[0]);
-        $scope.edit = CommonData.getEdit();
-        justSynced = true;
-        console.log("$scope.edit", $scope.edit)
-        doc.setValue($scope.edit.edit)
+        if($scope.edit == undefined) {
+          $scope.edit = doc.getValue();
+        } else {
+          CommonData.setEdit(edits.data.data[0]);
+          $scope.edit = CommonData.getEdit();
+          justSynced = true;
+          console.log("$scope.edit", $scope.edit)
+          doc.setValue($scope.edit.edit)
+        }
       });
     // var changesMade = doc.historySize().undo + doc.historySize().redo;
     _editor.on("change", function(instance, changeObj) {
