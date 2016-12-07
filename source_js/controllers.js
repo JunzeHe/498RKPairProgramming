@@ -188,23 +188,28 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
 
   $scope.codemirrorLoaded = function(_editor) {
     _editor.focus();
-    // _editor.setValue("console.log('Hello world!');");
-    // _editor.setCursor({ line: 1, ch: 0 })
+    _editor.setValue("console.log('Hello world!');");
+    _editor.setCursor({ line: 1, ch: 0 })
     var doc = _editor.getDoc()
-    socket.emit('new edit', {
-      dateCreated: new Date(),
-      userName: $scope.username,
-      roomName: $scope.room.roomName,
-      roomId: $scope.room._id,
-      edit: doc.getValue()
-    });
-    // Backend.getEdits($scope.room._id, {lastCreated: new Date()})
-    //   .then(function(edits) {
-    //     CommonData.setEdits(edits.data.data);
-    //     $scope.edits = CommonData.getEdits();
-    //   });
-    // var changesMade = doc.historySize().undo + doc.historySize().redo;
+    if($scope.edits != undefined && $scope.edits.length > 0) {
+      socket.emit('new edit', {
+        dateCreated: new Date(),
+        userName: $scope.username,
+        roomName: $scope.room.roomName,
+        roomId: $scope.room._id,
+        edit: doc.getValue()
+      });
+    }
     var justSynced = false;
+    Backend.getEdits($scope.room._id)
+      .then(function(edits) {
+        CommonData.setEdit(edits.data.data);
+        $scope.edit = CommonData.getEdit()[0];
+        justSynced = true;
+        console.log("$scope.edit", $scope.edit)
+        doc.setValue($scope.edit.edit)
+      });
+    // var changesMade = doc.historySize().undo + doc.historySize().redo;
     _editor.on("change", function(instance, changeObj) {
       // console.log(changeObj)
       cursor = doc.getCursor();
