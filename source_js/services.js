@@ -1,4 +1,4 @@
-var PPServices = angular.module('PPServices', ['ngStorage']);
+ var PPServices = angular.module('PPServices', ['ngStorage']);
 
 PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
   var username = $sessionStorage.username;
@@ -34,11 +34,12 @@ PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
       return $sessionStorage.messages;
 
     },
-    setEdits: function(newEdits){
-      $sessionStorage.edits = newEdits;
+    setEdit: function(newEdit){
+      console.log("newEdit", newEdit)
+      $sessionStorage.edit = newEdit;
     },
-    getEdits: function(){
-      return $sessionStorage.edits;
+    getEdit: function(){
+      return $sessionStorage.edit;
     }
   }
 }]);
@@ -59,8 +60,8 @@ PPServices.factory('Backend', ['$http', function($http) {
     getMessages: function(roomId){
       return $http.get(baseUrl + "/messages/" + roomId);
     },
-    getEdits: function(roomId){
-      return $http.get(baseUrl + "/edits/" + roomId);
+    getEdits: function(roomId, paramObj){
+      return $http.get(baseUrl + "/edits/" + roomId, {params : paramObj});
     }
   }
 }]);
