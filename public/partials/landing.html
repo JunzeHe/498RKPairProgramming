@@ -22,6 +22,12 @@
           <input type="text" name="username" placeholder="Username" required ng-model="username" ng-class="{'invalid-input':roomForm.username.$invalid && submitted}">
           <p ng-show="roomForm.username.$invalid && submitted" class="help-text-invalid help-text">Username is required.</p>
         </label>
+
+        <label>
+          <input type="text" name="roomPassword" placeholder="Room Password" ng-model="roomPassword" ng-class="{'invalid-input':roomForm.username.$invalid && submitted}">
+          <!-- <p ng&#45;show="roomForm.username.$invalid &#38;&#38; submitted" class="help&#45;text&#45;invalid help&#45;text">Username is required.</p> -->
+        </label>
+
         <button class="hollow button" type="submit">Join</button>
         <p ng-show="hasError" class="alert callout">Error: {{error}}</p>
       </form>

@@ -44,8 +44,8 @@ PPServices.factory('Backend', ['$http', function($http) {
     createRoom: function(roomName) {
       return $http.post(baseUrl + "/room", {roomName: roomName});
     },
-    getRoom: function(roomId) {
-      return $http.get(baseUrl + "/room/" + roomId);
+    getRoom: function(roomId, roomPassword) {
+      return $http.get(baseUrl + "/room/" + roomId, {params:{password: roomPassword}});
     },
     joinRoom: function(roomId, userName){
       return $http.post(baseUrl + "/room/"+ roomId,{userName: userName});

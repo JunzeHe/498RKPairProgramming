@@ -30,6 +30,20 @@ module.exports = function(router) {
     }
     else{
     //Player 1 has entered the game
+      // Room.findOne({_id: req.params.roomId, password: req.body.password})
+      // .then(function(room){
+      //   if(!room){
+      //     res.send("Room not found");
+      //   }
+      //   else{
+      //     console.log("Room Found");
+      //     console.log(room);
+      //     res.json({message: "Room Found", data: room});
+      //   }
+      // })
+      // .catch(function(err){
+      //   res.status(404).json({message: "Error finding room", data: err});
+      // });
       Room.findByIdAndUpdate(
         req.params.roomId,
         {$push: {"users": req.body.userName}},
@@ -47,12 +61,15 @@ module.exports = function(router) {
     if(!req.params.roomId)
       res.json({message:"No room id supplied", data: null});
     else{
-      Room.findById(req.params.roomId,"-password")
+      console.log(req.query);
+      Room.findOne({_id: req.params.roomId, password:req.query.password})
         .then(function(room){
-          res.json({message:"Room retrieved", data: room});
-        })
-        .catch(function(err){
-          res.json({message:"Error", data: err});
+          if(room){
+            room.password = "";
+            res.status(200).json({message:"room retrieved", data: room});
+          }
+          else
+            res.status(401).json({message:"incorrect password", data:null});
         });
     };
   });
