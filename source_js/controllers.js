@@ -64,16 +64,6 @@ PPControllers.controller('LandingController', [
 ]);
 
 PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '$mdPanel', function($scope, Backend, CommonData, $mdPanel) {
-  $scope.editorOptions = {
-    lineWrapping: true,
-    lineNumbers: true,
-    viewportMargin: Infinity
-  };
-  $scope.codemirrorLoaded = function(_editor) {
-    _editor.focus();
-    _editor.setValue("console.log('Hello world!');");
-    _editor.setCursor({ line: 1, ch: 0 })
-  }
 
   $scope.room = CommonData.getRoom();
   console.log($scope.room)
@@ -86,7 +76,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   $scope.shareLink = false;
   $scope.toggleShareLink = function($event) {
     console.log("toggle clicked", $scope.shareLink);
-    if($scope.shareLink == true) {
+    if ($scope.shareLink == true) {
       $scope.hideShareLink($event);
     } else {
       $scope.showShareLink($event);
@@ -107,7 +97,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
         '<md-card-title-text><h2>Click to copy this link:</h2></md-card-title-text></md-card-title>' +
         '<md-card-content><span id="share-link-text" value="localhost:3000/#/landing/' + $scope.room._id +
         '" ngclipboard data-clipboard-target="#share-link-text">' +
-        'localhost:3000/#/landing/' + $scope.room._id + '</span>' + 
+        'localhost:3000/#/landing/' + $scope.room._id + '</span>' +
         '</md-card-content></md-card>',
       clickOutsideToClose: true,
       escapeToClose: true,
@@ -180,6 +170,37 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   });
 
   socket.on('new edit', function(data) {
-    //Handle incoming edits from other people here
+    console.log("new edit")
+    console.log(data);
+    console.log($scope.edits)
   });
+
+  $scope.editorOptions = {
+    lineWrapping: true,
+    lineNumbers: true,
+    viewportMargin: Infinity
+  };
+  $scope.codemirrorLoaded = function(_editor) {
+    _editor.focus();
+    _editor.setValue("console.log('Hello world!');");
+    _editor.setCursor({ line: 1, ch: 0 })
+    var doc = _editor.getDoc()
+    // var changesMade = doc.historySize().undo + doc.historySize().redo;
+    _editor.on("change", function(instance, changeObjs) {
+      var edit = {
+        dateCreated: new Date(),
+        userName: $scope.username,
+        roomName: $scope.room.roomName,
+        roomId: $scope.room._id,
+        edit: doc.getValue()
+      }
+      socket.emit('new edit', edit);
+      console.log("new edit emitted");
+      // if(changesMade != doc.historySize().undo + doc.historySize().redo) {
+      //   console.log("history changed size");
+      // }
+      // changesMade = doc.historySize().undo + doc.historySize().redo
+    })
+
+  }
 }]);
