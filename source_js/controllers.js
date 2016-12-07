@@ -7,6 +7,7 @@ PPControllers.controller('LandingController', [
     $scope.roomId = $routeParams.roomId;
     $scope.username = "";
     $scope.roomName = "";
+    $scope.roomPassword = "";
     CommonData.reset();
     $scope.createRoom = function(isValid) {
       $scope.submitted = true;
@@ -15,7 +16,7 @@ PPControllers.controller('LandingController', [
       console.log(isValid);
       if (isValid) {
         CommonData.setUsername($scope.username);
-        Backend.createRoom($scope.roomName).then(function(res) {
+        Backend.createRoom($scope.roomName, $scope.roomPassword).then(function(res) {
           console.log(res);
           CommonData.setRoom(res.data.data);
           $location.url('/room');
@@ -30,9 +31,10 @@ PPControllers.controller('LandingController', [
       $scope.submitted = true;
       $scope.error = "";
       $scope.hasError = false;
+      $scope.invalidPassword = false;
       if (isValid) {
         CommonData.setUsername($scope.username);
-        Backend.getRoom($scope.roomId).then(function(res) {
+        Backend.getRoom($scope.roomId, $scope.roomPassword).then(function(res) {
           console.log(res);
           var room = res.data.data;
           if (room.users.includes($scope.username)) {
@@ -46,7 +48,10 @@ PPControllers.controller('LandingController', [
         }, function(res) {
           console.log("failure");
           $scope.hasError = true;
+          $scope.invalidPassword = true;
           $scope.error = res;
+          if(res.status == 401)
+            $scope.error = "Incorrect password."
         });
 
         Backend.getMessages($scope.roomId)
@@ -90,6 +95,9 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     var panelPosition = $mdPanel.newPanelPosition().absolute('.share-link')
       .centerHorizontally().centerVertically();
 
+    var link = window.location.href.split("/");
+    var host = link[0] + "//" + link[2]
+
     var config = {
       attachTo: angular.element(document.body),
       position: panelPosition,
@@ -97,9 +105,9 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
       // templateUrl: './partials/shareLink.html',
       template: '<md-card class="share-link-box"><md-card-title>' +
         '<md-card-title-text><h2>Click to copy this link:</h2></md-card-title-text></md-card-title>' +
-        '<md-card-content><span id="share-link-text" value="localhost:3000/#/landing/' + $scope.room._id +
+        '<md-card-content><span id="share-link-text" value="' + host + '/#/landing/' + $scope.room._id +
         '" ngclipboard data-clipboard-target="#share-link-text">' +
-        'localhost:3000/#/landing/' + $scope.room._id + '</span>' +
+        host + '/#/landing/' + $scope.room._id + '</span>' +
         '</md-card-content></md-card>',
       clickOutsideToClose: true,
       escapeToClose: true,
