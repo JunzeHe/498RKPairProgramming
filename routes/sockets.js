@@ -12,7 +12,7 @@ module.exports = function(io){
       roomId = data.roomId.toString();
 
       socket.join(roomId);
-      io.to(roomId).emit('new user', userName);
+      socket.broadcast.to(roomId).emit('new user', userName);
     });
 
     socket.on('disconnect', function(){
