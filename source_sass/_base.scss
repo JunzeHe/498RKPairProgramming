@@ -1,18 +1,18 @@
 // Add any custom Sass & CSS here
 body,
-h1,
 h2,
 h3 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
 }
 
-button:focus {
-  outline: 0;
+h1 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
 }
 
-#fire {
-  color: red;
+button:focus {
+  outline: 0;
 }
 
 .row {
@@ -20,7 +20,6 @@ button:focus {
 }
 
 .code {
-  background-color: #147cc0;
   height: 100vh;
   padding: 0;
   display: flex;
@@ -39,9 +38,11 @@ button:focus {
   }
   .code-toolbar {
     flex: 0 0 auto;
-    background-color: #cacaca;
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid #cdcdcd;
+    background-color: white;
     width: 100%;
-    padding: 0.9375rem;
+    padding: 0.70rem;
     .icons {
       text-align: center;
     }
@@ -64,20 +65,29 @@ form {
 }
 
 .chat {
-  background-color: #3adb76;
   height: 100vh;
   button:focus {
     outline: 0;
   }
   .chat-toolbar {
-    background-color: #3c3c3c;
+    border-left: 1px solid #cdcdcd;
+    border-right: 1px solid #cdcdcd;
+    background-color: white;
     padding: 0.9375rem;
   }
   .chat-msgs {
-    background-color: #da3116;
+    border: 1px solid #cdcdcd;
+    background-color: white;
     height: calc(100vh - 134px);
     width: 100%;
     overflow-y: scroll;
+
+    p {
+      font-size: 12px;
+    }
+    span {
+      font-size: 10px;
+    }
   }
   .chat-msg {
     width: 100%;
@@ -88,12 +98,17 @@ form {
     }
   }
   .chat-input {
+
+    border-left: 1px solid #cdcdcd;
+    border-right: 1px solid #cdcdcd;
     padding-top: 0.9375rem;
     padding-left: 0.9375rem;
     padding-right: 0.9375rem;
-    background-color: #cc8b00;
+    background-color: white;
+
     input {
       width: 100%;
+      border: none;
     }
     input:focus {
       outline: none;
@@ -105,9 +120,54 @@ form {
 }
 
 .current-user {
-  background-color: map-get($foundation-palette, warning)
+  background-color: #2199e8;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.other-user {
+  background-color: #d8d8d8;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .message-time {
   font-size: rem-calc(12);
+}
+
+.flex-center-vertically {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 400px;
+}
+
+.home {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9)), url("../media/group.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  //filter: blur(5px);
+  
+  h1, p {
+    color: white;
+  }
+
+
+  img {
+    -webkit-filter: blur(5px); /* Safari */
+    filter: blur(5px);
+  }
+  //background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9)), url("../media/mac.jpg");
+  //background-color: pink;
+
+
+}
+
+.cover {
+  height: 100vh;
 }
