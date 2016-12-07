@@ -203,12 +203,8 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     //   });
     // var changesMade = doc.historySize().undo + doc.historySize().redo;
     var justSynced = false;
-    var preRecCursor = doc.getCursor();
-    var updatedCursor = doc.getCursor();
-    _editor.on("change", function(instance, changeObj) {
-      console.log(changeObj)
+    _editor.on("change", function(instance, changeObjs) {
       if(justSynced == false) {
-        updatedCursor = doc.getCursor();
         var edit = {
           dateCreated: new Date(),
           userName: $scope.username,
@@ -229,14 +225,11 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
 
     socket.on('new edit', function(data) {
       $scope.edit = data.data;
-      preRecCursor = doc.getCursor();
+      var cursor = doc.getCursor();
       console.log($scope.edit.edit)
       justSynced = true;
       doc.setValue($scope.edit.edit)
-      if(preRecCursor.line != updatedCursor.line
-        && preRecCursor.ch != updatedCursor.ch){ 
-        doc.setCursor(preRecCursor);
-      }
+      doc.setCursor(cursor);
     });
 
   }
