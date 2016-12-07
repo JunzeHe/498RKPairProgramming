@@ -1,6 +1,4 @@
 <div class="row">
-
-
     <div class="medium-8 large-8 columns code">
         <div class="code-box">
             <div class="cm-container" ui-codemirror="{ onLoad : codemirrorLoaded }" ui-codemirror-opts="editorOptions" ui-refresh="language"></div>
@@ -9,10 +7,8 @@
         <div class="code-toolbar">
             <div class="row">
                 <div class="medium-12 columns">
-
                     <div class="row">
-
-                        <div class="medium-12 large-4 columns">
+                        <div class="medium-12 large-6 columns">
                             <select ng-model="language" ng-change="changeLanguage()">
                                 <option value="python">Python</option>
                                 <option value="javascript">Javascript</option>
@@ -20,21 +16,33 @@
                                 <option value="haskell">Haskell</option>
                             </select>
                         </div>
+                        <div class="medium-12 large-6 columns icons">
 
-                        <div class="medium-12 large-8 columns icons">
-                            <button type="button" class="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                            <button type="button" class="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                            <button type="button" class="button"><i class="fa fa-upload" aria-hidden="true"></i></button>
-                            <button type="button" class="button"><i class="fa fa-download" aria-hidden="true"></i></button>
-                            <button type="button" class="button"><i class="fa fa-undo" aria-hidden="true"></i></button>
-                            <button type="button" class="button"><i class="fa fa-repeat" aria-hidden="true"></i></button>
-                            <button type="button" class="button"><i class="fa fa-play" aria-hidden="true"></i></button>
+                            <!--<div class="button-group">-->
+                                <!--<button type="button" class="button"><i class="fa fa-plus" aria-hidden="true"></i></button>-->
+                                <!--<button type="button" class="button"><i class="fa fa-minus" aria-hidden="true"></i></button>-->
+                                <!--<button type="button" class="button"><i class="fa fa-upload" aria-hidden="true"></i></button>-->
+                                <!--<button type="button" class="button"><i class="fa fa-download" aria-hidden="true"></i></button>-->
+                                <!--<button type="button" class="button"><i class="fa fa-undo" aria-hidden="true"></i></button>-->
+                                <!--<button type="button" class="button"><i class="fa fa-repeat" aria-hidden="true"></i></button>-->
+                                <!--<button type="button" class="button"><i class="fa fa-play" aria-hidden="true"></i></button>-->
+
+
+                                <a href=""><i class="fa fa-plus fa-lg" aria-hidden="true"></i></a>
+                                <a href=""><i class="fa fa-minus fa-lg" aria-hidden="true"></i></a>
+                                <a href=""><i class="fa fa-upload fa-lg" aria-hidden="true"></i></a>
+                                <a href=""><i class="fa fa-download fa-lg" aria-hidden="true"></i></a>
+                                <a href=""><i class="fa fa-undo fa-lg" aria-hidden="true"></i></a>
+                                <a href=""><i class="fa fa-repeat fa-lg" aria-hidden="true"></i></a>
+                                <a href=""><i class="fa fa-play fa-lg" aria-hidden="true"></i></a>
+
+
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
 
@@ -43,10 +51,8 @@
     <div class="medium-4 large-4 columns chat">
         <div class="row">
             <div class="medium-12 columns chat-toolbar">
-
-                <a href=""><i class="fa fa-clock-o fa-2x" aria-hidden="true"></i></a>
                 <a class="share-link" href="" ng-click="toggleShareLink($event)">
-                    <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
                 </a>
             </div>
         </div>
@@ -54,7 +60,9 @@
 
         <div class="row">
             <div class="medium-12 columns chat-msgs" scroll-bottom="messages">
-                <div class="chat-msg" ng-repeat="message in messages" ng-class="{'current-user': message.userName == username}">
+                <br>
+                <div class="chat-msg" ng-repeat="message in messages"
+                     ng-class="{'current-user': message.userName == username, 'other-user': message.userName != username}">
                     <strong>{{message.userName}}</strong>
                     <span class="message-time"> {{message.dateCreated | date : "hh:mm a"}}</span>
                     <br>
@@ -67,15 +75,7 @@
             <div class="medium-12 columns chat-input">
                 <form name="msgForm" novalidate ng-submit="sendMsg(msgForm.$valid)">
                     <div class="input-group">
-                        <!-- <textarea rows="2" placeholder="Enter Message" class="input-group-field"></textarea>
-                        <div class="input-group-button">
-                            <input type="submit" class="button" value="Send">
-                        </div> -->
-
-                        <input ng-model="chatMsg" required class="input-group-field" placeholder="Press enter to send message."></input>
-                        <!--<div class="input-group-button">-->
-                        <!--<button type="submit" class="button">Submit</button>-->
-                        <!--</div>-->
+                        <input ng-model="chatMsg" required class="input-group-field" placeholder="Press enter to send message"></input>
                     </div>
                 </form>
             </div>
