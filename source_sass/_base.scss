@@ -7,6 +7,10 @@ h3 {
   font-weight: 400;
 }
 
+button:focus {
+  outline: 0;
+}
+
 #fire {
   color: red;
 }
@@ -90,6 +94,9 @@ form {
     background-color: #cc8b00;
     input {
       width: 100%;
+    }
+    input:focus {
+      outline: none;
     }
   }
   .input-group-button {
