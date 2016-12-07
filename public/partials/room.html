@@ -56,6 +56,9 @@
                 <a class="share-link" href="" ng-click="toggleShareLink($event)">
                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                 </a>
+                <p ng-repeat="username in room.users">
+
+                </p>
             </div>
         </div>
 
@@ -65,10 +68,13 @@
                 <br>
                 <div class="chat-msg" ng-repeat="message in messages"
                      ng-class="{'current-user': message.userName == username, 'other-user': message.userName != username}">
-                    <strong>{{message.userName}}</strong>
-                    <span class="message-time"> {{message.dateCreated | date : "hh:mm a"}}</span>
-                    <br>
-                    <p>{{message.message}}</p>
+
+                    <div class="msg">
+                        <strong>{{message.userName}}</strong>
+                        <span class="message-time"> {{message.dateCreated | date : "hh:mm a"}}</span>
+                        <br>
+                        <p>{{message.message}}</p>
+                    </div>
                 </div>
             </div>
         </div>
