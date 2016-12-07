@@ -1,4 +1,22 @@
-#Starter Code for CS498RK Final Project - Pair Programming
+#Pair Programming 
+
+##Presentation 
+###Important User Flows
+- Create a private/secure room or a casual room for everyone to participate in creating code
+- Share and edit live code
+- Personalize development environment
+- Chat alongside with the code
+- Compile and Run code within the browser
+
+###Voice Over Scripts
+
+
+###Motivation Behind Design Decisions
+**How did heuristic evaluation play a role in changes that were made to the interface**
+Heuristics: 
+- **Flexibility and Efficiency of Use**: Keyboard shortcuts. Multiple languages supported. Highly customizable text area because everyone has different preferences. 
+- **Aesthetic and Minimalist Design**: Big text areas for code and display chat which is where the user will focus on most. No need to sign up for an account. Create and room and code!
+- **User Control and Freedom**: Easily leave and reenter a room. Undo and redo. 
 
 ##Setup 
 1. `bower install`
