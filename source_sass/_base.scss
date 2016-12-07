@@ -64,6 +64,10 @@ button:focus {
   position: fixed !important;
 }
 
+select {
+  outline: none
+}
+
 form {
   display: inline;
 }
