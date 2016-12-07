@@ -54,7 +54,7 @@ PPControllers.controller('LandingController', [
             CommonData.setMessages(messages.data.data);
           });
 
-        Backend.getEdits($scope.roomId)
+        Backend.getEdits($scope.roomId, new Date())
           .then(function(edits) {
             CommonData.setEdits(edits.data.data);
           });
@@ -64,29 +64,21 @@ PPControllers.controller('LandingController', [
 ]);
 
 PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '$mdPanel', function($scope, Backend, CommonData, $mdPanel) {
-  $scope.editorOptions = {
-    lineWrapping: true,
-    lineNumbers: true,
-    viewportMargin: Infinity
-  };
-  $scope.codemirrorLoaded = function(_editor) {
-    _editor.focus();
-    _editor.setValue("console.log('Hello world!');");
-    _editor.setCursor({ line: 1, ch: 0 })
-  }
-
+  var socket = io();
   $scope.room = CommonData.getRoom();
   console.log($scope.room)
   $scope.username = CommonData.getUsername();
   $scope.chatMsg = "";
   $scope.serverResponses = [];
   $scope.messages = CommonData.getMessages();
+  $scope.edit = CommonData.getEdit();
+  console.log("edits", $scope.edits)
 
 
   $scope.shareLink = false;
   $scope.toggleShareLink = function($event) {
     console.log("toggle clicked", $scope.shareLink);
-    if($scope.shareLink == true) {
+    if ($scope.shareLink == true) {
       $scope.hideShareLink($event);
     } else {
       $scope.showShareLink($event);
@@ -107,7 +99,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
         '<md-card-title-text><h2>Click to copy this link:</h2></md-card-title-text></md-card-title>' +
         '<md-card-content><span id="share-link-text" value="localhost:3000/#/landing/' + $scope.room._id +
         '" ngclipboard data-clipboard-target="#share-link-text">' +
-        'localhost:3000/#/landing/' + $scope.room._id + '</span>' + 
+        'localhost:3000/#/landing/' + $scope.room._id + '</span>' +
         '</md-card-content></md-card>',
       clickOutsideToClose: true,
       escapeToClose: true,
@@ -136,7 +128,6 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   }
   Backend.joinRoom($scope.room._id, $scope.username);
 
-  var socket = io();
   socket.emit('store username and roomId', { username: $scope.username, roomId: $scope.room._id });
   socket.on('response', function(res) {
     $scope.$apply(function() {
@@ -179,7 +170,57 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     $scope.$apply(function() { $scope.messages.push(data.data); });
   });
 
-  socket.on('new edit', function(data) {
-    //Handle incoming edits from other people here
-  });
+  $scope.editorOptions = {
+    lineWrapping: true,
+    lineNumbers: true,
+    viewportMargin: Infinity
+  };
+
+  $scope.codemirrorLoaded = function(_editor) {
+    _editor.focus();
+    // _editor.setValue("console.log('Hello world!');");
+    // _editor.setCursor({ line: 1, ch: 0 })
+    var doc = _editor.getDoc()
+    socket.emit('new edit', {
+      dateCreated: new Date(),
+      userName: $scope.username,
+      roomName: $scope.room.roomName,
+      roomId: $scope.room._id,
+      edit: doc.getValue()
+    });
+    // Backend.getEdits($scope.room._id, {lastCreated: new Date()})
+    //   .then(function(edits) {
+    //     CommonData.setEdits(edits.data.data);
+    //     $scope.edits = CommonData.getEdits();
+    //   });
+    // var changesMade = doc.historySize().undo + doc.historySize().redo;
+    var justSynced = false;
+    _editor.on("change", function(instance, changeObjs) {
+      if(justSynced == false) {
+        var edit = {
+          dateCreated: new Date(),
+          userName: $scope.username,
+          roomName: $scope.room.roomName,
+          roomId: $scope.room._id,
+          edit: doc.getValue()
+        }
+        socket.emit('new edit', edit);
+        // if(changesMade != doc.historySize().undo + doc.historySize().redo) {
+        //   console.log("history changed size");
+        // }
+        // changesMade = doc.historySize().undo + doc.historySize().redo  
+      } else {
+        justSynced = false;
+      }
+      
+    })
+
+    socket.on('new edit', function(data) {
+      $scope.edit = data.data;
+      console.log($scope.edit.edit)
+      justSynced = true;
+      doc.setValue($scope.edit.edit)
+    });
+
+  }
 }]);

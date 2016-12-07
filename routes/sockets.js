@@ -25,6 +25,7 @@ module.exports = function(io){
         }
       );
     });
+    
 
     socket.on('chat message', function(msg){
       var message = new Message(msg);
