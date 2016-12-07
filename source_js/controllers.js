@@ -217,9 +217,11 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
 
     socket.on('new edit', function(data) {
       $scope.edit = data.data;
+      var cursor = doc.getCursor();
       console.log($scope.edit.edit)
       justSynced = true;
       doc.setValue($scope.edit.edit)
+      doc.setCursor(cursor);
     });
 
   }
