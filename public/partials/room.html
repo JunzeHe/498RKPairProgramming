@@ -1,7 +1,7 @@
 <div class="row">
     <div class="medium-8 large-8 columns code">
         <div class="code-box">
-            <div class="cm-container" ui-codemirror="{ onLoad : codemirrorLoaded }" ui-codemirror-opts="editorOptions"></div>
+            <div class="cm-container" ui-codemirror="{ onLoad : codemirrorLoaded }" ui-codemirror-opts="editorOptions" ui-refresh="language"></div>
         </div>
 
         <div class="code-toolbar">
@@ -9,14 +9,12 @@
                 <div class="medium-12 columns">
                     <div class="row">
                         <div class="medium-12 large-6 columns">
-                            <form action="">
-                                <select>
-                                    <option value="husker">Husker</option>
-                                    <option value="starbuck">Starbuck</option>
-                                    <option value="hotdog">Hot Dog</option>
-                                    <option value="apollo">Apollo</option>
-                                </select>
-                            </form>
+                            <select ng-model="language" ng-change="changeLanguage()">
+                                <option value="python">Python</option>
+                                <option value="javascript">Javascript</option>
+                                <option value="go">Go</option>
+                                <option value="haskell">Haskell</option>
+                            </select>
                         </div>
                         <div class="medium-12 large-6 columns icons">
 

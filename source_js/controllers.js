@@ -40,7 +40,7 @@ PPControllers.controller('LandingController', [
           if (room.users.includes($scope.username)) {
             console.log("failure");
             $scope.hasError = true;
-            $scope.error = "Duplicate username for room " + 
+            $scope.error = "Duplicate username for room " +
               room.roomName + ". Please enter a unique username.";
           } else {
             CommonData.setRoom(room);
@@ -61,8 +61,8 @@ PPControllers.controller('LandingController', [
           });
 
         Backend.getEdits($scope.roomId, new Date())
-          .then(function(edits) {
-            CommonData.setEdits(edits.data.data);
+          .then(function(edit) {
+            CommonData.setEdit(edit.data.data);
           });
       }
     }
@@ -79,7 +79,11 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   $scope.serverResponses = [];
   $scope.messages = CommonData.getMessages();
   $scope.edit = CommonData.getEdit();
-  console.log("edits", $scope.edits)
+  $scope.language = "python"
+  $scope.changeLanguage = function() {
+    console.log("change language to", $scope.language)
+    $scope.cmEditor.setOption("mode", $scope.language)
+  }
 
 
   $scope.shareLink = false;
@@ -106,7 +110,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
       targetEvent: $event,
       // templateUrl: './partials/shareLink.html',
       template: '<md-card class="share-link-box"><md-card-title>' +
-        '<md-card-title-text><h2>Click to copy this link:</h2></md-card-title-text></md-card-title>' +
+        '<md-card-title-text><h2>Click link to copy:</h2></md-card-title-text></md-card-title>' +
         '<md-card-content><span id="share-link-text" value="' + host + '/#/landing/' + $scope.room._id +
         '" ngclipboard data-clipboard-target="#share-link-text">' +
         host + '/#/landing/' + $scope.room._id + '</span>' +
@@ -183,15 +187,17 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   $scope.editorOptions = {
     lineWrapping: true,
     lineNumbers: true,
-    viewportMargin: Infinity
+    viewportMargin: Infinity,
+    mode: $scope.language
   };
 
   $scope.codemirrorLoaded = function(_editor) {
+    $scope.cmEditor = _editor;
     _editor.focus();
     _editor.setValue("console.log('Hello world!');");
     _editor.setCursor({ line: 1, ch: 0 })
     var doc = _editor.getDoc()
-    if($scope.edits != undefined && $scope.edits.length > 0) {
+    if($scope.edit == undefined) {
       socket.emit('new edit', {
         dateCreated: new Date(),
         userName: $scope.username,
@@ -203,8 +209,8 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     var justSynced = false;
     Backend.getEdits($scope.room._id)
       .then(function(edits) {
-        CommonData.setEdit(edits.data.data);
-        $scope.edit = CommonData.getEdit()[0];
+        CommonData.setEdit(edits.data.data[0]);
+        $scope.edit = CommonData.getEdit();
         justSynced = true;
         console.log("$scope.edit", $scope.edit)
         doc.setValue($scope.edit.edit)
@@ -228,7 +234,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
         // if(changesMade != doc.historySize().undo + doc.historySize().redo) {
         //   console.log("history changed size");
         // }
-        // changesMade = doc.historySize().undo + doc.historySize().redo  
+        // changesMade = doc.historySize().undo + doc.historySize().redo
       } else {
         justSynced = false;
       }
