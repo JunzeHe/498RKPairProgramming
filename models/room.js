@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 // Define our user schema
 var RoomSchema   = new mongoose.Schema({
   roomName: String,
-  users: [String]
+  users: [String],
+  password: String
 });
 
 // Export the Mongoose model
