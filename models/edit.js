@@ -10,8 +10,7 @@ var EditSchema   = new mongoose.Schema({
     type: String,
     index: true
   },
-  edit: String,
-  lang: String
+  edit: String
 });
 
 // Export the Mongoose model
