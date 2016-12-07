@@ -55,9 +55,12 @@
 
 
         <div class="row">
-            <div class="medium-12 columns chat-msg">
-                <div ng-repeat="message in messages">
-                    <span class="message-time">{{message.dateCreated | date : "hh:mm a"}}</span> {{message.userName}}: {{message.message}}
+            <div class="medium-12 columns chat-msgs" scroll-bottom="messages">
+                <div class="chat-msg" ng-repeat="message in messages" ng-class="{'current-user': message.userName == username}">
+                    <strong>{{message.userName}}</strong>
+                    <span class="message-time"> {{message.dateCreated | date : "hh:mm a"}}</span>
+                    <br>
+                    <p>{{message.message}}</p>
                 </div>
             </div>
         </div>

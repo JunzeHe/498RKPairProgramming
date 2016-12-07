@@ -69,9 +69,19 @@ form {
     background-color: #3c3c3c;
     padding: 0.9375rem;
   }
-  .chat-msg {
+  .chat-msgs {
     background-color: #da3116;
     height: calc(100vh - 134px);
+    width: 100%;
+    overflow-y: scroll;
+  }
+  .chat-msg {
+    width: 100%;
+    p {
+      margin-bottom: 0px;
+      width: 100%;
+      word-wrap: break-word;
+    }
   }
   .chat-input {
     padding-top: 0.9375rem;
@@ -85,6 +95,10 @@ form {
   .input-group-button {
     padding-left: 0.9375rem;
   }
+}
+
+.current-user {
+  background-color: map-get($foundation-palette, warning)
 }
 
 .message-time {
