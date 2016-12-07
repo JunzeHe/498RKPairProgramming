@@ -4,6 +4,12 @@ PPServices.factory('CommonData', ['$sessionStorage', function($sessionStorage) {
   var username = $sessionStorage.username;
   var room = $sessionStorage.room;
   return {
+    reset: function() {
+      $sessionStorage.username = "";
+      $sessionStorage.room = "";
+      $sessionStorage.messages = "";
+      $sessionStorage.edits = "";
+    },
     getUsername: function() {
       return username;
     },

@@ -8,6 +8,7 @@ PPControllers.controller('LandingController', [
     $scope.username = "";
     $scope.roomName = "";
     $scope.roomPassword = "";
+    CommonData.reset();
     $scope.createRoom = function(isValid) {
       $scope.submitted = true;
       $scope.error = "";
@@ -111,7 +112,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
         '<md-card-title-text><h2>Click to copy this link:</h2></md-card-title-text></md-card-title>' +
         '<md-card-content><span id="share-link-text" value="localhost:3000/#/landing/' + $scope.room._id +
         '" ngclipboard data-clipboard-target="#share-link-text">' +
-        'localhost:3000/#/landing/' + $scope.room._id + '</span>' + 
+        'localhost:3000/#/landing/' + $scope.room._id + '</span>' +
         '</md-card-content></md-card>',
       clickOutsideToClose: true,
       escapeToClose: true,
