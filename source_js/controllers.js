@@ -61,8 +61,8 @@ PPControllers.controller('LandingController', [
           });
 
         Backend.getEdits($scope.roomId, new Date())
-          .then(function(edits) {
-            CommonData.setEdits(edits.data.data);
+          .then(function(edit) {
+            CommonData.setEdit(edit.data.data);
           });
       }
     }
@@ -84,7 +84,6 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     console.log("change language to", $scope.language)
     $scope.cmEditor.setOption("mode", $scope.language)
   }
-  console.log("edits", $scope.edits)
 
 
   $scope.shareLink = false;
@@ -198,7 +197,7 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     _editor.setValue("console.log('Hello world!');");
     _editor.setCursor({ line: 1, ch: 0 })
     var doc = _editor.getDoc()
-    if($scope.edits != undefined && $scope.edits.length > 0) {
+    if($scope.edit == undefined) {
       socket.emit('new edit', {
         dateCreated: new Date(),
         userName: $scope.username,
@@ -210,8 +209,8 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     var justSynced = false;
     Backend.getEdits($scope.room._id)
       .then(function(edits) {
-        CommonData.setEdit(edits.data.data);
-        $scope.edit = CommonData.getEdit()[0];
+        CommonData.setEdit(edits.data.data[0]);
+        $scope.edit = CommonData.getEdit();
         justSynced = true;
         console.log("$scope.edit", $scope.edit)
         doc.setValue($scope.edit.edit)
