@@ -73,7 +73,6 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   function($scope, Backend, CommonData, $mdPanel) {
   var socket = io();
   $scope.room = CommonData.getRoom();
-  console.log($scope.room)
   $scope.username = CommonData.getUsername();
   $scope.chatMsg = "";
   $scope.serverResponses = [];
@@ -84,6 +83,8 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     console.log("change language to", $scope.language)
     $scope.cmEditor.setOption("mode", $scope.language)
   }
+
+  console.log($scope.room)
 
 
   $scope.shareLink = false;
@@ -140,7 +141,18 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
       panelRef.destroy();
     });
   }
+
   Backend.joinRoom($scope.room._id, $scope.username);
+  // if($scope.room.users.includes($scope.username) == false){
+  //   console.log("room", $scope.room)
+  //   console.log("user", $scope.user)
+  //   Backend.joinRoom($scope.room._id, $scope.username).then(function(res) {
+  //     CommonData.setRoom(res.data.data)
+  //     console.log(res.data.data)
+  //     $scope.room = CommonData.getRoom();
+  //     console.log($scope.room)
+  //   });
+  // }
 
   socket.emit('store username and roomId', { username: $scope.username, roomId: $scope.room._id });
   socket.on('response', function(res) {
@@ -194,8 +206,8 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
   $scope.codemirrorLoaded = function(_editor) {
     $scope.cmEditor = _editor;
     _editor.focus();
-    _editor.setValue("console.log('Hello world!');");
-    _editor.setCursor({ line: 1, ch: 0 })
+    // _editor.setValue("console.log('Hello world!');");
+    // _editor.setCursor({ line: 1, ch: 0 })
     var doc = _editor.getDoc()
     if($scope.edit == undefined) {
       socket.emit('new edit', {
@@ -209,11 +221,15 @@ PPControllers.controller('RoomController', ['$scope', 'Backend', 'CommonData', '
     var justSynced = false;
     Backend.getEdits($scope.room._id)
       .then(function(edits) {
-        CommonData.setEdit(edits.data.data[0]);
-        $scope.edit = CommonData.getEdit();
-        justSynced = true;
-        console.log("$scope.edit", $scope.edit)
-        doc.setValue($scope.edit.edit)
+        if($scope.edit == undefined) {
+          $scope.edit = doc.getValue();
+        } else {
+          CommonData.setEdit(edits.data.data[0]);
+          $scope.edit = CommonData.getEdit();
+          justSynced = true;
+          console.log("$scope.edit", $scope.edit)
+          doc.setValue($scope.edit.edit)
+        }
       });
     // var changesMade = doc.historySize().undo + doc.historySize().redo;
     _editor.on("change", function(instance, changeObj) {
