@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046ba225-f76b-47b6-91ef-0d18d24a93ae" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source_sass/_base.scss" afterPath="$PROJECT_DIR$/source_sass/_base.scss" />
     </list>
     <ignored path="498RKPairProgramming.iws" />
@@ -49,8 +48,8 @@
       <file leaf-file-name="_base.scss" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source_sass/_base.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+            <state relative-caret-position="240">
+              <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -295,7 +294,7 @@
       <workItem from="1486268124811" duration="1865000" />
       <workItem from="1486270124365" duration="348000" />
       <workItem from="1486271179577" duration="142000" />
-      <workItem from="1486271339383" duration="264000" />
+      <workItem from="1486271339383" duration="416000" />
     </task>
     <task id="LOCAL-00001" summary="Basic UI Layout">
       <created>1480991339883</created>
@@ -343,7 +342,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44974000" />
+    <option name="totallyTimeSpent" value="45126000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -775,8 +774,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source_sass/_base.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+        <state relative-caret-position="240">
+          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
           <folding />
         </state>
       </provider>
