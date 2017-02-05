@@ -9,6 +9,7 @@ h3 {
 h1 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
+  color: red;
 }
 
 button:focus {
@@ -171,7 +172,7 @@ form {
   background-repeat: no-repeat;
   background-size: cover;
   //filter: blur(5px);
-  
+
   h1, p {
     color: white;
   }
