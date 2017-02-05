@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="046ba225-f76b-47b6-91ef-0d18d24a93ae" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source_sass/_base.scss" afterPath="$PROJECT_DIR$/source_sass/_base.scss" />
-    </list>
+    <list default="true" id="046ba225-f76b-47b6-91ef-0d18d24a93ae" name="Default" comment="" />
     <ignored path="498RKPairProgramming.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -295,7 +293,7 @@
       <workItem from="1486270124365" duration="348000" />
       <workItem from="1486271179577" duration="142000" />
       <workItem from="1486271339383" duration="489000" />
-      <workItem from="1486274531581" duration="135000" />
+      <workItem from="1486274531581" duration="194000" />
     </task>
     <task id="LOCAL-00001" summary="Basic UI Layout">
       <created>1480991339883</created>
@@ -343,7 +341,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45334000" />
+    <option name="totallyTimeSpent" value="45393000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -742,14 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/partials/room.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="15" column="72" selection-start-line="15" selection-start-column="72" selection-end-line="15" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/css/styles.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2616">
@@ -769,6 +759,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
           <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/partials/room.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="15" column="72" selection-start-line="15" selection-start-column="72" selection-end-line="15" selection-end-column="72" />
           <folding />
         </state>
       </provider>
